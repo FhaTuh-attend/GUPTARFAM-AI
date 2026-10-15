@@ -6,131 +6,163 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GuptarFam AI</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#101116;color:#f5f5f7;font-family:Arial,sans-serif}
-header{padding:22px;background:#191b24;border-bottom:2px solid #f5b82e}
-header h1{margin:0;color:#f5b82e}
-header p{color:#aaa}
-nav{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:#191b24}
-button{padding:11px;border:0;border-radius:8px;background:#f5b82e;color:#111;font-weight:bold;cursor:pointer}
-nav button{background:#292b36;color:white}
-main{padding:16px;max-width:900px;margin:auto}
-section{display:none}
-section.active{display:block}
-.card{background:#191b24;border:1px solid #333644;border-radius:12px;padding:17px;margin:12px 0}
-h2{color:#f5b82e}
-input,textarea,select{display:block;width:100%;padding:12px;margin:9px 0 15px;background:#101116;color:white;border:1px solid #444;border-radius:8px}
-textarea{min-height:100px}
-.output{white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere;margin-top:12px}
-.small{font-size:12px;color:#aaa;line-height:1.6}
-  /* GUPTARFAM AI — PROFESSIONAL BLUE & WHITE THEME */
+* {
+  box-sizing: border-box;
+  }
 
 :root {
 color-scheme: light;
 --primary: #1769ff;
 --primary-dark: #1047b5;
---sidebar-bg: #123b78;
+--navy: #123b78;
 --page-bg: #f4f8ff;
 --card-bg: #ffffff;
---heading-color: #15345b;
---text-color: #344563;
---border-color: #dce7f5;
+--text: #344563;
+--heading: #15345b;
+--border: #dce7f5;
 }
 
-/* Main dashboard */
-html,
 body {
-background: #f4f8ff !important;
-color: #344563 !important;
+margin: 0;
+background: var(--page-bg);
+color: var(--text);
+font-family: Arial, sans-serif;
 }
 
-/* Dashboard headings */
-h1,
-h2,
-h3,
-h4 {
-color: #15345b;
-}
-
-/* Navigation and sidebar */
-aside,
-.sidebar,
-nav {
-background-color: #123b78;
-color: #ffffff;
-}
-
-/* Sidebar links */
-aside a,
-.sidebar a,
-nav a {
-color: #ffffff;
-}
-
-/* Dashboard cards and panels */
-.card,
-.stat-card,
-.panel,
-.widget,
-.dashboard-card {
+header {
+padding: 22px;
 background: #ffffff;
-color: #344563;
-border: 1px solid #dce7f5;
-border-radius: 14px;
+border-bottom: 3px solid var(--primary);
+}
+
+header h1 {
+margin: 0;
+color: var(--navy);
+}
+
+header p {
+color: #60728b;
+}
+
+nav {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+padding: 12px;
+background: var(--navy);
+}
+
+button {
+padding: 11px;
+border: 0;
+border-radius: 8px;
+background: var(--primary);
+color: #ffffff;
+font-weight: bold;
+cursor: pointer;
+transition: background 0.2s ease;
+}
+
+button:hover {
+background: var(--primary-dark);
+}
+
+nav button {
+background: transparent;
+color: #ffffff;
+border: 1px solid transparent;
+}
+
+nav button:hover {
+background: #24549a;
+}
+
+main {
+padding: 16px;
+max-width: 900px;
+margin: auto;
+}
+
+section {
+display: none;
+}
+
+section.active {
+display: block;
+}
+
+.card {
+background: #ffffff;
+color: var(--text);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 17px;
+margin: 12px 0;
 box-shadow: 0 4px 16px rgba(18, 59, 120, 0.06);
 }
 
-/* Buttons */
-button,
-.btn,
-.primary-button {
-background-color: #1769ff;
-color: #ffffff;
-border-color: #1769ff;
+h2 {
+color: var(--heading);
 }
 
-/* Form fields */
+h3,
+h4 {
+color: var(--heading);
+}
+
 input,
 textarea,
 select {
-background-color: #ffffff !important;
-color: #15345b !important;
-border-color: #cbd9ec;
+display: block;
+width: 100%;
+padding: 12px;
+margin: 9px 0 15px;
+background: #ffffff;
+color: #172b4d;
+border: 1px solid #cbd9ec;
+border-radius: 8px;
+font: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
 color: #718096;
+opacity: 1;
 }
 
-/* Links */
-a {
-color: #1769ff;
+input:focus,
+textarea:focus,
+select:focus {
+outline: 2px solid #1769ff;
+border-color: #1769ff;
 }
 
-/* Tables */
-table {
-background: #ffffff;
-color: #344563;
+textarea {
+min-height: 100px;
 }
 
-th {
-background: #eaf2ff;
-color: #15345b;
+.output {
+white-space: pre-wrap;
+line-height: 1.6;
+overflow-wrap: anywhere;
+margin-top: 12px;
+color: var(--text);
 }
 
-td,
-th {
-border-color: #dce7f5;
+.small {
+font-size: 12px;
+color: #60728b;
+line-height: 1.6;
 }
 
-/* Preserve the working AI chat */
+/* Keep the real GuptarFam AI chat working */
 #gf-chat-panel {
 background: #ffffff !important;
+border: 1px solid var(--border);
 }
 
 #gf-chat-header {
-background: #1769ff !important;
+background: var(--primary) !important;
 color: #ffffff !important;
 }
 
@@ -144,7 +176,7 @@ color: #000000 !important;
 </head>
 <body>
 <header>
-<h1>🔥 GUPTARFAM AI</h1>
+<h1> GUPTARFAM AI</h1>
 <p>Your personal AI command centre</p>
 </header>
 
