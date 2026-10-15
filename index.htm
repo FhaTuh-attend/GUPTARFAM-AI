@@ -1,3033 +1,334 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>GuptarFam AI | Your AI Command Centre</title>
-
+<meta name="theme-color" content="#030d22">
+<title>GuptarFam AI | Command Centre</title>
 <style>
-:root {
-  --blue: #1769ff;
-  --blue-dark: #1047b5;
-  --navy: #102a56;
-  --background: #f4f7fc;
-  --white: #ffffff;
-  --text: #17233d;
-  --muted: #71809b;
-  --border: #e3eaf5;
-  --green: #13b981;
-  --red: #ef4444;
-  --shadow: 0 8px 30px rgba(28, 56, 110, .07);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: var(--background);
-  color: var(--text);
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  outline: 3px solid rgba(23, 105, 255, .3);
-  outline-offset: 2px;
-}
-
-.app {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar {
-  width: 255px;
-  background: var(--white);
-  border-right: 1px solid var(--border);
-  padding: 25px 17px;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  transition: transform .25s ease;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 0 9px 30px;
-}
-
-.brand-icon {
-  width: 43px;
-  height: 43px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #1769ff, #63a4ff);
-  color: white;
-  display: grid;
-  place-items: center;
-  font-size: 22px;
-  box-shadow: 0 7px 18px rgba(23,105,255,.25);
-}
-
-.brand h2 {
-  margin: 0;
-  font-size: 17px;
-  letter-spacing: -.5px;
-}
-
-.brand small {
-  display: block;
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 4px;
-}
-
-.nav-label {
-  color: #9aa7bb;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  padding: 10px 12px;
-}
-
-.nav-button {
-  border: 0;
-  background: transparent;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-align: left;
-  padding: 13px 14px;
-  border-radius: 11px;
-  color: #64738d;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  transition: .2s;
-}
-
-.nav-button:hover,
-.nav-button.active {
-  background: #edf4ff;
-  color: var(--blue);
-}
-
-.nav-icon {
-  width: 22px;
-  text-align: center;
-  font-size: 17px;
-}
-
-.sidebar-bottom {
-  margin-top: auto;
-}
-
-.connection-card {
-  padding: 15px;
-  background: #f4f8ff;
-  border: 1px solid #e5edff;
-  border-radius: 13px;
-}
-
-.connection-card strong {
-  display: block;
-  font-size: 12px;
-  margin-bottom: 8px;
-}
-
-.connection-card p {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.6;
-  margin: 0;
-}
-
-.status-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  margin-right: 5px;
-}
-
-/* MAIN */
-
-.main {
-  min-width: 0;
-  flex: 1;
-}
-
-.topbar {
-  height: 77px;
-  background: rgba(255,255,255,.94);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
-  gap: 15px;
-}
-
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-}
-
-.topbar h3 {
-  margin: 0;
-  font-size: 17px;
-}
-
-.topbar p {
-  margin: 4px 0 0;
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.assistant-status {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: #64738d;
-  font-size: 12px;
-}
-
-.avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: #eaf1ff;
-  color: var(--blue);
-  display: grid;
-  place-items: center;
-  font-size: 19px;
-}
-
-.mobile-menu {
-  display: none;
-  border: 0;
-  background: #edf4ff;
-  color: var(--blue);
-  padding: 9px 12px;
-  border-radius: 9px;
-}
-
-.content {
-  max-width: 1450px;
-  margin: auto;
-  padding: 30px;
-}
-
-.page {
-  display: none;
-  animation: appear .2s ease;
-}
-
-.page.active {
-  display: block;
-}
-
-@keyframes appear {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.eyebrow {
-  color: var(--blue);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.7px;
-  margin-bottom: 12px;
-}
-
-.page-heading {
-  font-size: clamp(25px, 3vw, 34px);
-  letter-spacing: -1.2px;
-  margin: 0 0 9px;
-}
-
-.page-description {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.7;
-  max-width: 700px;
-  margin: 0 0 25px;
-}
-
-/* HERO */
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(115deg, #123b78, #1769ff 75%, #5a9aff);
-  border-radius: 23px;
-  padding: 35px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  box-shadow: 0 15px 35px rgba(23,105,255,.17);
-  margin-bottom: 27px;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,.12);
-  right: -55px;
-  top: -120px;
-  box-shadow:
-    0 0 0 30px rgba(255,255,255,.035),
-    0 0 0 60px rgba(255,255,255,.025);
-}
-
-.hero-text {
-  position: relative;
-  z-index: 1;
-  max-width: 650px;
-}
-
-.hero-label {
-  display: inline-block;
-  background: rgba(255,255,255,.14);
-  padding: 8px 12px;
-  border-radius: 30px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 18px;
-}
-
-.hero h1 {
-  font-size: clamp(28px, 4vw, 42px);
-  line-height: 1.15;
-  letter-spacing: -1.5px;
-  margin: 0 0 13px;
-}
-
-.hero p {
-  color: #dce9ff;
-  font-size: 13px;
-  line-height: 1.8;
-  margin: 0 0 23px;
-  max-width: 510px;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.btn {
-  border: 0;
-  border-radius: 10px;
-  padding: 12px 17px;
-  font-size: 12px;
-  font-weight: 700;
-  transition: .2s;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-}
-
-.btn-white {
-  background: white;
-  color: var(--blue);
-}
-
-.btn-glass {
-  color: white;
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.22);
-}
-
-.btn-primary {
-  background: var(--blue);
-  color: white;
-}
-
-.btn-primary:hover {
-  background: var(--blue-dark);
-}
-
-.btn-light {
-  background: #edf4ff;
-  color: var(--blue);
-}
-
-.btn-danger {
-  background: #fff0f0;
-  color: var(--red);
-}
-
-.hero-art {
-  position: relative;
-  z-index: 1;
-  width: 145px;
-  height: 145px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  font-size: 78px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 0 45px rgba(255,255,255,.08);
-}
-
-/* CARDS */
-
-.section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 27px 0 16px;
-}
-
-.section-heading h2 {
-  margin: 0;
-  font-size: 17px;
-}
-
-.section-heading span {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0,1fr));
-  gap: 16px;
-}
-
-.stat-card,
-.card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 21px;
-  box-shadow: var(--shadow);
-  min-width: 0;
-}
-
-.stat-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 17px;
-}
-
-.stat-icon {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  background: #edf4ff;
-  border-radius: 12px;
-  font-size: 20px;
-}
-
-.stat-card h3 {
-  font-size: 25px;
-  margin: 0 0 7px;
-  letter-spacing: -.8px;
-}
-
-.stat-card p {
-  margin: 0;
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.mini-tag {
-  background: #e8fbf3;
-  color: #0d9b68;
-  padding: 5px 8px;
-  border-radius: 7px;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 16px;
-}
-
-.module-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 22px;
-  transition: .2s;
-}
-
-.module-card:hover {
-  transform: translateY(-3px);
-  border-color: #b6d0ff;
-  box-shadow: var(--shadow);
-}
-
-.module-icon {
-  width: 47px;
-  height: 47px;
-  display: grid;
-  place-items: center;
-  font-size: 23px;
-  border-radius: 14px;
-  background: #edf4ff;
-  margin-bottom: 17px;
-}
-
-.module-card h3 {
-  margin: 0 0 9px;
-  font-size: 15px;
-}
-
-.module-card p {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
-  margin: 0 0 18px;
-}
-
-.module-card button {
-  border: 0;
-  background: transparent;
-  color: var(--blue);
-  font-size: 12px;
-  font-weight: 800;
-  padding: 0;
-}
-
-/* CHAT */
-
-.chat-layout {
-  display: grid;
-  grid-template-columns: minmax(0,1fr) 250px;
-  gap: 18px;
-  align-items: start;
-}
-
-.chat-panel {
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  background: white;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  min-width: 0;
-}
-
-.chat-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 17px 20px;
-  border-bottom: 1px solid var(--border);
-}
-
-.chat-header .avatar {
-  background: linear-gradient(135deg, #1769ff, #70aaff);
-  color: white;
-}
-
-.chat-header h3 {
-  font-size: 13px;
-  margin: 0 0 5px;
-}
-
-.chat-header p {
-  font-size: 10px;
-  color: var(--muted);
-  margin: 0;
-}
-
-.chat-header-right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.icon-button {
-  border: 1px solid var(--border);
-  background: white;
-  border-radius: 9px;
-  padding: 9px;
-  color: var(--blue);
-}
-
-.chat-messages {
-  height: 400px;
-  overflow-y: auto;
-  padding: 20px;
-  background: #fbfcff;
-}
-
-.message {
-  margin-bottom: 19px;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.message.user {
-  flex-direction: row-reverse;
-}
-
-.message-avatar {
-  width: 31px;
-  height: 31px;
-  min-width: 31px;
-  border-radius: 10px;
-  background: #e8f0ff;
-  display: grid;
-  place-items: center;
-  font-size: 15px;
-}
-
-.message.user .message-avatar {
-  background: var(--blue);
-  color: white;
-}
-
-.message-bubble {
-  max-width: 85%;
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 4px 13px 13px 13px;
-  padding: 12px 14px;
-  font-size: 12px;
-  line-height: 1.8;
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-}
-
-.message.user .message-bubble {
-  background: #1769ff;
-  border-color: #1769ff;
-  color: white;
-  border-radius: 13px 4px 13px 13px;
-}
-
-.message-time {
-  display: block;
-  color: #9aa7bb;
-  font-size: 9px;
-  margin-top: 7px;
-}
-
-.message.user .message-time {
-  color: #dce9ff;
-}
-
-.typing-indicator {
-  color: var(--muted);
-  font-size: 12px;
-  padding: 0 20px 15px;
-  background: #fbfcff;
-}
-
-.chat-composer {
-  border-top: 1px solid var(--border);
-  padding: 15px;
-  background: white;
-}
-
-.composer-tools {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 11px;
-}
-
-.small-pill {
-  border: 1px solid var(--border);
-  background: #f8faff;
-  color: #64738d;
-  border-radius: 20px;
-  padding: 7px 10px;
-  font-size: 10px;
-}
-
-.small-pill.active {
-  color: var(--blue);
-  border-color: #a9c7ff;
-  background: #edf4ff;
-}
-
-.composer-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 9px;
-}
-
-.composer-row textarea {
-  flex: 1;
-  width: 100%;
-  min-width: 0;
-  min-height: 47px;
-  max-height: 130px;
-  resize: vertical;
-  padding: 14px;
-  background: #f7f9fd;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  color: #17233d;
-  font-size: 12px;
-  outline: none;
-}
-
-.composer-row textarea:focus {
-  border-color: #9dbfff;
-}
-
-.mic-button {
-  height: 47px;
-  min-width: 47px;
-  border: 0;
-  border-radius: 12px;
-  color: white;
-  background: var(--blue);
-  font-size: 20px;
-  box-shadow: 0 5px 14px rgba(23,105,255,.18);
-}
-
-.mic-button.listening {
-  background: var(--red);
-  animation: pulse 1s infinite;
-}
-
-.mic-button:disabled {
-  opacity: .5;
-  cursor: not-allowed;
-}
-
-@keyframes pulse {
-  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,.35); }
-  50% { box-shadow: 0 0 0 9px rgba(239,68,68,0); }
-}
-
-.send-button {
-  height: 47px;
-  padding: 0 17px;
-  border: 0;
-  border-radius: 11px;
-  background: var(--blue);
-  color: white;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.composer-hint {
-  margin: 9px 2px 0;
-  font-size: 10px;
-  color: #94a1b6;
-  line-height: 1.6;
-}
-
-.chat-side-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 19px;
-  margin-bottom: 15px;
-}
-
-.chat-side-card h3 {
-  margin: 0 0 13px;
-  font-size: 13px;
-}
-
-.prompt-button {
-  width: 100%;
-  border: 1px solid var(--border);
-  background: white;
-  border-radius: 10px;
-  padding: 11px;
-  margin-bottom: 8px;
-  text-align: left;
-  color: #53627d;
-  font-size: 11px;
-  line-height: 1.5;
-}
-
-.prompt-button:hover {
-  border-color: #a9c7ff;
-  color: var(--blue);
-  background: #f7faff;
-}
-
-.voice-note {
-  padding: 13px;
-  border-radius: 11px;
-  background: #edf4ff;
-  color: #4f6590;
-  font-size: 11px;
-  line-height: 1.7;
-}
-
-/* FORMS */
-
-.form-grid {
-  display: grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-  gap: 18px;
-}
-
-.form-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 24px;
-  box-shadow: var(--shadow);
-  min-width: 0;
-}
-
-.form-card h3 {
-  margin: 0 0 7px;
-  font-size: 16px;
-}
-
-.form-card > p {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
-  margin: 0 0 20px;
-}
-
-.field {
-  margin-bottom: 15px;
-}
-
-.field label {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.field input,
-.field textarea,
-.field select {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 12px;
-  color: var(--text);
-  background: #fbfcff;
-}
-
-.field textarea {
-  min-height: 110px;
-  resize: vertical;
-  line-height: 1.6;
-}
-
-.output-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 23px;
-  margin-top: 18px;
-  min-height: 120px;
-  overflow-wrap: anywhere;
-}
-
-.output-card h3 {
-  font-size: 14px;
-  margin: 0 0 13px;
-}
-
-.output-content {
-  font-size: 12px;
-  line-height: 1.9;
-  white-space: pre-wrap;
-  color: #465571;
-}
-
-.output-content:empty::before {
-  content: "Your generated results will appear here.";
-  color: #9aa7bb;
-}
-
-.market-note {
-  background: #fff8e8;
-  border: 1px solid #f5e5bd;
-  border-radius: 12px;
-  padding: 15px;
-  color: #806326;
-  font-size: 12px;
-  line-height: 1.7;
-  margin-bottom: 18px;
-}
-
-.footer {
-  padding: 28px 10px 10px;
-  text-align: center;
-  color: #9aa7bb;
-  font-size: 10px;
-}
-
-.toast {
-  position: fixed;
-  bottom: 22px;
-  left: 50%;
-  transform: translate(-50%, 20px);
-  background: #102a56;
-  color: white;
-  padding: 12px 17px;
-  border-radius: 11px;
-  box-shadow: var(--shadow);
-  font-size: 12px;
-  opacity: 0;
-  pointer-events: none;
-  transition: .25s;
-  z-index: 1000;
-  max-width: calc(100% - 30px);
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 1050px) {
-  .sidebar {
-    width: 225px;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, minmax(0,1fr));
-  }
-
-  .modules-grid {
-    grid-template-columns: repeat(2, minmax(0,1fr));
-  }
-
-  .chat-layout {
-    grid-template-columns: minmax(0,1fr);
-  }
-
-  .chat-sidebar {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-    gap: 12px;
-  }
-}
-
-@media (max-width: 720px) {
-  .sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 100;
-    width: 260px;
-    transform: translateX(-105%);
-    box-shadow: 15px 0 35px rgba(20,40,80,.12);
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .mobile-menu {
-    display: inline-block;
-  }
-
-  .topbar {
-    padding: 0 15px;
-    height: 70px;
-  }
-
-  .topbar h3 {
-    font-size: 14px;
-  }
-
-  .assistant-status {
-    display: none;
-  }
-
-  .content {
-    padding: 19px 14px;
-  }
-
-  .hero {
-    padding: 25px 20px;
-  }
-
-  .hero-art {
-    width: 78px;
-    height: 78px;
-    font-size: 42px;
-  }
-
-  .hero h1 {
-    font-size: 29px;
-  }
-
-  .stats-grid {
-    gap: 10px;
-  }
-
-  .stat-card {
-    padding: 15px;
-  }
-
-  .stat-card h3 {
-    font-size: 21px;
-  }
-
-  .modules-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .chat-sidebar {
-    grid-template-columns: 1fr;
-  }
-
-  .chat-messages {
-    height: 360px;
-    padding: 14px;
-  }
-
-  .message-bubble {
-    max-width: 91%;
-  }
-
-  .chat-header {
-    padding: 14px;
-  }
-
-  .chat-composer {
-    padding: 11px;
-  }
-
-  .send-button {
-    padding: 0 12px;
-  }
-}
-
-@media (max-width: 390px) {
-  .hero-art {
-    display: none;
-  }
-
-  .hero {
-    padding: 24px 18px;
-  }
-
-  .topbar-right .avatar {
-    display: none;
-  }
-
-  .composer-row {
-    gap: 6px;
-  }
-
-  .mic-button {
-    min-width: 42px;
-  }
-}
+:root{--bg:#020a1b;--panel:#06142d;--panel2:#081a38;--line:#12376a;--blue:#087cff;--cyan:#16c7ff;--text:#edf5ff;--muted:#9bb7dc;--green:#00e3ad;--red:#ff647c;--radius:17px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 60% -20%,#12356a 0,transparent 45%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;font-size:14px}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}.app{min-height:100vh}.topbar{height:82px;border-bottom:1px solid #12305a;display:flex;align-items:center;gap:24px;padding:0 26px;position:sticky;top:0;z-index:10;background:rgba(2,10,27,.94);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:12px;min-width:300px}.brand-mark{font-size:38px;color:#53bfff;text-shadow:0 0 20px #087cff}.brand-name{font-size:25px;font-weight:800;letter-spacing:-.8px}.searchbar{flex:1;display:flex;align-items:center;gap:10px;background:#0a1d40;border:1px solid #174b8e;border-radius:15px;padding:12px 16px;color:#a9c6ed}.searchbar input{border:0;outline:0;background:transparent;color:white;width:100%}.top-actions{margin-left:auto;display:flex;align-items:center;gap:16px}.icon-btn{background:transparent;border:0;color:#d9eaff;font-size:22px}.profile{display:flex;align-items:center;gap:10px;white-space:nowrap}.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(145deg,#d9e8ff,#31598b);display:grid;place-items:center;font-size:22px}.profile strong{display:block}.profile small{color:var(--muted)}.layout{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:calc(100vh - 82px)}.sidebar{border-right:1px solid #102c53;padding:22px 15px;display:flex;flex-direction:column;gap:5px;background:rgba(2,12,29,.6)}.nav-button{display:flex;align-items:center;gap:13px;border:1px solid transparent;background:transparent;color:#c7dcf7;text-align:left;padding:13px 14px;border-radius:11px;font-size:15px;width:100%;transition:.2s}.nav-button:hover{background:#0b2045;border-color:#163f77}.nav-button.active{background:linear-gradient(100deg,#087eff,#0639e7);box-shadow:0 0 22px #087cff40;color:white}.nav-icon{width:23px;text-align:center;font-size:20px}.nav-label{font-size:11px;letter-spacing:1.5px;color:#82a9d8;padding:22px 14px 7px}.side-card{margin-top:auto;border:1px solid #087cff;border-radius:15px;padding:20px 14px;text-align:center;background:linear-gradient(155deg,#071d42,#030c20);box-shadow:0 0 24px #087cff19}.side-card .crown{font-size:33px;color:#6ccaff}.side-card h3{margin:8px 0;color:#b7dfff}.side-card p{line-height:1.55;color:#a8c4e8;font-size:12px}.main{padding:14px 16px 24px;min-width:0}.page{display:none}.page.active{display:block;animation:appear .22s ease}@keyframes appear{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}.dashboard-grid{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:16px}.main-column{min-width:0}.hero{min-height:326px;position:relative;overflow:hidden;border:1px solid #075bb0;border-radius:18px;background:linear-gradient(90deg,rgba(3,13,34,.97) 0%,rgba(3,13,34,.88) 37%,rgba(3,13,34,.15) 72%),linear-gradient(135deg,#08285b,#020b20 70%);display:flex;align-items:center;padding:27px 24px;margin-bottom:16px}.hero:before{content:"";position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=85');background-size:cover;background-position:center;opacity:.34;mix-blend-mode:screen}.hero:after{content:"";position:absolute;right:5%;top:0;width:47%;height:100%;background:radial-gradient(ellipse at center,#087cff30,transparent 60%);pointer-events:none}.hero-copy{position:relative;z-index:2;max-width:56%}.ai-visual{position:absolute;z-index:1;right:4%;top:50%;transform:translateY(-50%);width:min(39%,300px);filter:drop-shadow(0 0 24px #168bff66);pointer-events:none}.ai-visual svg{display:block;width:100%;height:auto}.ai-visual .pulse{animation:aiPulse 2.8s ease-in-out infinite;transform-origin:center}.ai-visual .scan{animation:aiScan 3.8s ease-in-out infinite}@keyframes aiPulse{0%,100%{opacity:.55}50%{opacity:1}}@keyframes aiScan{0%,100%{transform:translateY(-12px);opacity:.25}50%{transform:translateY(12px);opacity:.8}}.eyebrow{color:#58caff;font-weight:700;letter-spacing:1.4px;font-size:11px}.hero h1{font-size:30px;line-height:1.2;margin:14px 0 10px;letter-spacing:-.7px}.hero p{color:#c2d9f5;line-height:1.6;max-width:420px}.hero .quote{position:absolute;z-index:2;right:22px;top:40px;max-width:170px;text-align:right;color:#71dfff;font-size:16px;line-height:1.5;font-weight:700}.primary-btn{border:1px solid #229dff;background:linear-gradient(100deg,#078cff,#0750ed);color:#fff;border-radius:30px;padding:13px 20px;font-weight:700;box-shadow:0 7px 22px #087cff3d}.primary-btn:hover{filter:brightness(1.12)}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.feature-card{min-height:172px;border:1px solid #2347b9;border-radius:15px;padding:15px;background:linear-gradient(145deg,#112aa1,#091442);position:relative;cursor:pointer;transition:transform .18s,border-color .18s;overflow:hidden}.feature-card:hover{transform:translateY(-3px);border-color:#66caff}.feature-card:nth-child(2){background:linear-gradient(145deg,#491064,#1a0a35);border-color:#64218c}.feature-card:nth-child(3){background:linear-gradient(145deg,#064b3d,#071b2a);border-color:#087f6d}.feature-card:nth-child(4){background:linear-gradient(145deg,#062c76,#09163b)}.feature-card:nth-child(5){background:linear-gradient(145deg,#673316,#251326);border-color:#a75927}.feature-card:nth-child(6){background:linear-gradient(145deg,#06485a,#07182b);border-color:#087d9a}.feature-card:nth-child(7){background:linear-gradient(145deg,#370e81,#10103a);border-color:#6721c5}.feature-card:nth-child(8){background:linear-gradient(145deg,#172d58,#0b1530);border-color:#284b85}.feature-icon{width:49px;height:49px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#815bff,#4924d7);font-size:25px;margin-bottom:10px;box-shadow:0 0 20px #5a55ff44}.feature-card:nth-child(2) .feature-icon{background:linear-gradient(135deg,#ff4fbb,#a80e8e)}.feature-card:nth-child(3) .feature-icon{background:linear-gradient(135deg,#16e9a2,#009765)}.feature-card:nth-child(4) .feature-icon{background:linear-gradient(135deg,#4ca6ff,#1553d9)}.feature-card:nth-child(5) .feature-icon{background:linear-gradient(135deg,#ffad42,#e85d05)}.feature-card:nth-child(6) .feature-icon{background:linear-gradient(135deg,#31dfff,#007eae)}.feature-card:nth-child(7) .feature-icon{background:linear-gradient(135deg,#c45bff,#6900df)}.feature-card h3{margin:0 0 7px;font-size:15px}.feature-card p{margin:0;color:#c2d8f6;font-size:12px;line-height:1.5}.card-arrow{position:absolute;right:12px;bottom:11px;border:1px solid #a7cfff99;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:18px}.bottom-grid{display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:12px;margin-top:14px}.panel{border:1px solid #123b6d;border-radius:15px;background:linear-gradient(145deg,rgba(6,22,49,.96),rgba(2,12,29,.98));padding:15px;min-width:0}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}.panel-head h3{font-size:14px;margin:0}.text-link{border:0;background:transparent;color:#29baff;font-size:11px}.activity-item,.news-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0}.mini-icon{width:28px;height:28px;border-radius:9px;background:#0c3b68;display:grid;place-items:center;flex-shrink:0}.activity-item strong,.news-item strong{font-size:11px;font-weight:500;display:block}.activity-item small,.news-item small{font-size:10px;color:#88a9d1;display:block;margin-top:3px}.goal{display:flex;gap:9px;align-items:center;padding:7px 0;color:#c7def8;font-size:11px}.goal input{accent-color:#098bff;width:15px;height:15px}.goal.done span{text-decoration:line-through;color:#7294bb}.motivation{min-height:190px;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:linear-gradient(0deg,#030c20 0%,transparent 90%),url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80') center/cover;border-color:#163f85}.motivation h3{font-size:18px;line-height:1.4;max-width:190px}.right-column{display:flex;flex-direction:column;gap:13px;min-width:0}.live{color:var(--green);font-size:12px}.live:before{content:"●";margin-right:6px}.market-tabs{display:flex;gap:4px;background:#071936;border-radius:10px;padding:4px;margin-bottom:10px}.market-tabs button{flex:1;border:0;background:transparent;color:#bdd3f3;padding:8px 4px;border-radius:8px;font-size:11px}.market-tabs button.active{background:#0c3475;color:white}.market-row{display:grid;grid-template-columns:29px 1fr auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #102b50}.market-row:last-of-type{border-bottom:0}.coin{width:28px;height:28px;border-radius:50%;background:#23466e;display:grid;place-items:center}.market-name{font-size:12px}.market-value{text-align:right;font-size:12px}.change{display:block;margin-top:4px;font-size:11px;color:var(--green)}.change.down{color:var(--red)}.chart-box{margin-top:10px;padding:13px 10px;border:1px solid #123a6d;border-radius:12px;background:linear-gradient(180deg,#071c3a,#041127)}.chart-box strong{font-size:12px}.spark{width:100%;height:70px;margin-top:10px}.notice{font-size:11px;color:#7f9fc6;line-height:1.5;margin:10px 0 0}.full-btn{width:100%;border:0;background:#05245a;color:#25bdff;border-radius:10px;padding:10px;margin-top:9px}.news-item .mini-icon{border-radius:50%;width:32px;height:32px}.news-item div:last-child{line-height:1.4}.copyright{font-size:10px;color:#91afd6;line-height:1.6}.section-title{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin:8px 0 18px}.section-title h1{font-size:26px;margin:0 0 6px}.section-title p{margin:0;color:var(--muted);line-height:1.5}.tool-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:15px}.form-panel{border:1px solid var(--line);background:linear-gradient(145deg,#081a38,#041027);border-radius:16px;padding:20px}.form-panel h2{font-size:17px;margin:0 0 15px}.field{margin:13px 0}.field label{display:block;color:#b5cdef;margin-bottom:7px;font-size:12px}.field input,.field textarea,.field select,.search-field{width:100%;border:1px solid #1a4678;background:#030e23;color:#eaf4ff;border-radius:10px;padding:12px}.field textarea{min-height:125px;resize:vertical}.field select option{background:#06142d}.result{white-space:pre-wrap;line-height:1.65;color:#d2e5ff;font-size:13px}.result:empty:before{content:"Your result will appear here.";color:#7594bc}.output-box{min-height:130px;max-height:520px;overflow:auto;border:1px solid #123b6d;background:#020b1b;border-radius:12px;padding:15px;margin-top:13px}.chat-shell{border:1px solid #17477c;border-radius:17px;overflow:hidden;background:#040f24;display:grid;grid-template-rows:auto minmax(240px,1fr) auto}.chat-head{padding:15px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #12355e;background:#071a38}.orb{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#7feaff,#0768ff 55%,#05183d);box-shadow:0 0 25px #087cff66;font-size:22px}.chat-head h2{margin:0 0 4px;font-size:15px}.chat-head small{color:var(--green)}.chat-log{padding:18px;max-height:480px;overflow:auto;display:flex;flex-direction:column;gap:12px}.bubble{max-width:88%;padding:12px 14px;border-radius:14px;white-space:pre-wrap;line-height:1.55;font-size:13px}.bubble.ai{align-self:flex-start;background:#0a2044;border:1px solid #174777}.bubble.user{align-self:flex-end;background:#0754ba;border:1px solid #178bff}.chat-compose{border-top:1px solid #15345d;padding:12px;display:flex;gap:8px;align-items:flex-end}.chat-compose textarea{flex:1;min-height:44px;max-height:130px;resize:vertical;border:1px solid #1b4778;border-radius:12px;background:#020b1b;color:white;padding:12px}.round-btn{width:44px;height:44px;border:1px solid #1a5797;border-radius:12px;background:#082d65;color:white;font-size:19px}.round-btn.active{background:#9e1739;border-color:#ff6c89}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.secondary-btn{border:1px solid #205183;background:#071a38;color:#d5e9ff;border-radius:10px;padding:10px 12px;font-size:12px}.secondary-btn:hover{border-color:#20baff}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}.status-note{border:1px solid #17406b;background:#06172e;border-radius:12px;padding:12px;color:#a8c7ec;font-size:12px;line-height:1.6}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#0b2a53;border:1px solid #2985ce;color:white;padding:12px 18px;border-radius:12px;z-index:50;transition:.2s;box-shadow:0 10px 35px #0008}.toast.show{opacity:1;transform:translate(-50%,0)}.mobile-menu{display:none}.footer{color:#6f91bb;font-size:11px;padding:18px 0;text-align:center}
+@media(max-width:1250px){.dashboard-grid{grid-template-columns:minmax(0,1fr) 280px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.bottom-grid{grid-template-columns:1fr 1fr}.motivation{grid-column:1/-1}.brand{min-width:250px}.profile div:not(.avatar){display:none}}
+@media(max-width:950px){.topbar{padding:0 14px;gap:12px}.brand{min-width:auto}.brand-name{font-size:20px}.searchbar{display:none}.layout{grid-template-columns:1fr}.sidebar{position:fixed;top:82px;bottom:0;left:0;width:250px;z-index:20;transform:translateX(-105%);transition:transform .22s;box-shadow:15px 0 30px #0008}.sidebar.open{transform:translateX(0)}.mobile-menu{display:inline-block}.main{padding:12px}.dashboard-grid{grid-template-columns:1fr}.right-column{display:grid;grid-template-columns:1fr 1fr}.market-panel{grid-row:span 2}.tool-layout{grid-template-columns:1fr}.hero{min-height:290px}.hero .quote{display:none}.hero-copy{max-width:70%}.ai-visual{right:1%;width:34%;opacity:.8}}
+@media(max-width:600px){.topbar{height:68px}.layout{min-height:calc(100vh - 68px)}.sidebar{top:68px}.brand-mark{font-size:29px}.brand-name{font-size:17px}.top-actions{gap:7px}.profile{display:none}.main{padding:9px}.hero{min-height:310px;padding:20px;background-position:center}.hero-copy{max-width:100%;padding-right:0}.ai-visual{right:-5%;width:54%;opacity:.28}.hero:before{opacity:.2}.hero h1{font-size:27px}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.feature-card{padding:12px;min-height:164px}.feature-card h3{font-size:13px}.feature-card p{font-size:11px}.feature-icon{width:42px;height:42px}.bottom-grid{grid-template-columns:1fr}.motivation{grid-column:auto}.right-column{grid-template-columns:1fr}.market-panel{grid-row:auto}.two-col{grid-template-columns:1fr}.section-title h1{font-size:22px}.section-title{flex-direction:column}.profile{display:none}}
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
-  <!-- SIDEBAR -->
-
-  <aside class="sidebar" id="sidebar">
-
-    <div class="brand">
-      <div class="brand-icon">✦</div>
-      <div>
-        <h2>GuptarFam AI</h2>
-        <small>Your AI command centre</small>
-      </div>
+<header class="topbar">
+  <button class="icon-btn mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+  <div class="brand"><div class="brand-mark">♛</div><div class="brand-name">GuptarFam AI</div></div>
+  <label class="searchbar">⌕ <input id="globalSearch" placeholder="Search anything... (e.g. create content, analyse markets, build a plan)" aria-label="Search dashboard"></label>
+  <div class="top-actions">
+    <button class="icon-btn" id="notificationBtn" title="Notifications">♧</button>
+    <div class="profile"><div class="avatar">👤</div><div><strong>Savage, My Creator</strong><small>AI Creator | Builder</small></div><span>⌄</span></div>
+  </div>
+</header>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <button class="nav-button active" data-page="home"><span class="nav-icon">⌂</span> Home</button>
+  <button class="nav-button" data-page="assistant"><span class="nav-icon">✦</span> AI Assistant</button>
+  <button class="nav-button" data-page="content"><span class="nav-icon">✎</span> Content Studio</button>
+  <button class="nav-button" data-page="markets"><span class="nav-icon">↗</span> Forex &amp; Crypto</button>
+  <button class="nav-button" data-page="email"><span class="nav-icon">✉</span> Email Centre</button>
+  <button class="nav-button" data-page="business"><span class="nav-icon">◈</span> Business Hub</button>
+  <button class="nav-button" data-page="automation"><span class="nav-icon">⚙</span> Automation Lab</button>
+  <div class="nav-label">QUICK TOOLS</div>
+  <button class="nav-button" data-page="markets"><span class="nav-icon">▥</span> Market Overview</button>
+  <button class="nav-button" data-page="news"><span class="nav-icon">▤</span> News &amp; Trends</button>
+  <button class="nav-button" data-page="planner"><span class="nav-icon">◴</span> Tasks &amp; Planner</button>
+  <button class="nav-button" data-page="learning"><span class="nav-icon">♧</span> Learning Hub</button>
+  <button class="nav-button" data-page="projects"><span class="nav-icon">⚙</span> Settings &amp; Projects</button>
+  <div class="side-card"><div class="crown">♛</div><h3>Dream. Plan. Build.</h3><p>Big goals need a solid plan. You're not just using AI, you're building your future.</p></div>
+</aside>
+<main class="main">
+<!-- HOME -->
+<section class="page active" id="page-home">
+<div class="dashboard-grid">
+<div class="main-column">
+  <section class="hero">
+    <div class="hero-copy"><div class="eyebrow">♛ AI AGENCY</div><h1>Welcome back,<br>Savage, My Creator 👑</h1><p>Your AI Command Centre is ready.</p><p>Build your AI agency, create content, develop business ideas, work on programming projects and explore market research.</p><button class="primary-btn" onclick="navigate('assistant')">Let's Get Started&nbsp; →</button></div>
+    <div class="ai-visual" role="img" aria-label="Futuristic GuptarFam AI assistant robot illustration">
+      <svg viewBox="0 0 320 330" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><linearGradient id="botMetal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1fbff"></stop><stop offset=".35" stop-color="#8cbbe9"></stop><stop offset=".72" stop-color="#254f91"></stop><stop offset="1" stop-color="#071a3e"></stop></linearGradient><linearGradient id="botGlass" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#0c2a5c"></stop><stop offset=".55" stop-color="#07152e"></stop><stop offset="1" stop-color="#1465b5"></stop></linearGradient><radialGradient id="botGlow"><stop stop-color="#29d9ff" stop-opacity=".7"></stop><stop offset="1" stop-color="#087cff" stop-opacity="0"></stop></radialGradient></defs>
+        <ellipse cx="160" cy="164" rx="142" ry="150" fill="url(#botGlow)" class="pulse"></ellipse><circle cx="160" cy="162" r="126" fill="none" stroke="#35c9ff" stroke-opacity=".45" stroke-width="1.4" stroke-dasharray="4 8" class="pulse"></circle>
+        <path d="M76 112 Q66 65 110 47 L210 47 Q254 65 244 112 L253 202 Q248 239 214 249 L106 249 Q72 239 67 202Z" fill="url(#botMetal)" stroke="#9de8ff" stroke-width="2"></path>
+        <path d="M88 110 Q86 75 117 66 L203 66 Q234 75 232 110 L224 190 Q221 218 196 225 L124 225 Q99 218 96 190Z" fill="url(#botGlass)" stroke="#3caeff" stroke-width="2"></path>
+        <path d="M106 121 Q160 95 214 121" fill="none" stroke="#6ce8ff" stroke-opacity=".6" stroke-width="2"></path>
+        <rect x="112" y="132" width="36" height="13" rx="6.5" fill="#56eaff" class="pulse"></rect><rect x="172" y="132" width="36" height="13" rx="6.5" fill="#56eaff" class="pulse"></rect><path d="M132 177 Q160 191 188 177" fill="none" stroke="#48dfff" stroke-width="4" stroke-linecap="round"></path>
+        <path d="M67 133 L48 145 L49 191 L71 201 M253 133 L272 145 L271 191 L249 201" fill="none" stroke="url(#botMetal)" stroke-width="12" stroke-linecap="round"></path><circle cx="49" cy="169" r="9" fill="#20cfff"></circle><circle cx="271" cy="169" r="9" fill="#20cfff"></circle>
+        <path d="M130 249 L120 274 L200 274 L190 249" fill="url(#botMetal)" stroke="#55cfff" stroke-width="2"></path><path d="M95 280 Q160 262 225 280 L243 302 L77 302Z" fill="#0b2550" stroke="#2a9eff" stroke-width="2"></path><path d="M116 290 H204" stroke="#4ae6ff" stroke-width="3" stroke-linecap="round" class="scan"></path><circle cx="160" cy="35" r="7" fill="#48eaff"></circle><path d="M160 42 V57" stroke="#7cecff" stroke-width="4"></path><text x="160" y="322" text-anchor="middle" fill="#8feaff" font-size="11" font-weight="700" letter-spacing="3">GUPTARFAM AI</text>
+      </svg>
     </div>
-
-    <div class="nav-label">MAIN MENU</div>
-
-    <button class="nav-button active" data-page="home">
-      <span class="nav-icon">▦</span> Dashboard
-    </button>
-
-    <button class="nav-button" data-page="assistant">
-      <span class="nav-icon">✦</span> AI Assistant
-    </button>
-
-    <div class="nav-label">AI WORKSPACE</div>
-
-    <button class="nav-button" data-page="content">
-      <span class="nav-icon">✎</span> Content Studio
-    </button>
-
-    <button class="nav-button" data-page="markets">
-      <span class="nav-icon">↗</span> Forex & Crypto
-    </button>
-
-    <button class="nav-button" data-page="email">
-      <span class="nav-icon">✉</span> Email Centre
-    </button>
-
-    <button class="nav-button" data-page="business">
-      <span class="nav-icon">◈</span> Business Hub
-    </button>
-
-    <button class="nav-button" data-page="automation">
-      <span class="nav-icon">⚙</span> Automation Lab
-    </button>
-
-    <div class="sidebar-bottom">
-      <div class="connection-card">
-        <strong><span class="status-dot"></span> AI Connection</strong>
-        <p>Your GuptarFam AI brain is connected through your Cloudflare Worker.</p>
-      </div>
-    </div>
-
-  </aside>
-
-  <!-- MAIN CONTENT -->
-
-  <main class="main">
-
-    <header class="topbar">
-
-      <div class="topbar-left">
-        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
-
-        <div>
-          <h3 id="topbarTitle">Dashboard</h3>
-          <p>At your service, Savage, My Creator.</p>
-        </div>
-      </div>
-
-      <div class="topbar-right">
-        <div class="assistant-status">
-          <span class="status-dot"></span>
-          Assistant ready
-        </div>
-        <div class="avatar">🤖</div>
-      </div>
-
-    </header>
-
-    <div class="content">
-
-      <!-- DASHBOARD PAGE -->
-
-      <section class="page active" id="page-home">
-
-        <div class="hero">
-
-          <div class="hero-text">
-            <div class="hero-label">👑 BUILT FOR SAVAGE, MY CREATOR</div>
-
-<h1>Savage's vision.<br>Powered by AI.</h1>
-            <p>
-              Meet GuptarFam AI — your personal assistant for content creation,
-              business ideas, market research, emails and everyday problem-solving.
-            </p>
-
-            <div class="hero-buttons">
-              <button class="btn btn-white" onclick="navigate('assistant')">
-                ✦ Talk to GuptarFam
-              </button>
-
-              <button class="btn btn-glass" onclick="startVoice()">
-                🎙️ Activate voice
-              </button>
-            </div>
-          </div>
-
-          <div class="hero-art">🤖</div>
-
-        </div>
-
-        <div class="stats-grid">
-
-          <div class="stat-card">
-            <div class="stat-top">
-              <div class="stat-icon">🧠</div>
-              <span class="mini-tag">CONNECTED</span>
-            </div>
-            <h3>AI Brain</h3>
-            <p>Cloudflare Workers AI connection</p>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-top">
-              <div class="stat-icon">🎙️</div>
-              <span class="mini-tag">VOICE</span>
-            </div>
-            <h3>JARVIS Mode</h3>
-            <p>Tap-to-talk voice assistant</p>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-top">
-              <div class="stat-icon">✍️</div>
-              <span class="mini-tag">READY</span>
-            </div>
-            <h3>Content Studio</h3>
-            <p>Ideas, scripts and captions</p>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-top">
-              <div class="stat-icon">⚡</div>
-              <span class="mini-tag">TOOLS</span>
-            </div>
-            <h3>6 Workspaces</h3>
-            <p>Explore your AI tools</p>
-          </div>
-
-        </div>
-
-        <div class="section-heading">
-          <h2>Your AI workspace</h2>
-          <span>Choose a module to get started</span>
-        </div>
-
-        <div class="modules-grid">
-
-          <div class="module-card">
-            <div class="module-icon">🤖</div>
-            <h3>JARVIS AI Assistant</h3>
-            <p>Ask questions, brainstorm ideas, get explanations and talk to your AI.</p>
-            <button onclick="navigate('assistant')">Open assistant →</button>
-          </div>
-
-          <div class="module-card">
-            <div class="module-icon">🎬</div>
-            <h3>Content Studio</h3>
-            <p>Create YouTube ideas, Instagram captions, Facebook posts and video scripts.</p>
-            <button onclick="navigate('content')">Create content →</button>
-          </div>
-
-          <div class="module-card">
-            <div class="module-icon">📈</div>
-            <h3>Forex & Crypto</h3>
-            <p>Research markets, understand trading concepts and analyse information you provide.</p>
-            <button onclick="navigate('markets')">Explore markets →</button>
-          </div>
-
-          <div class="module-card">
-            <div class="module-icon">📧</div>
-            <h3>Email Centre</h3>
-            <p>Draft professional emails, replies, applications and business messages.</p>
-            <button onclick="navigate('email')">Open emails →</button>
-          </div>
-
-          <div class="module-card">
-            <div class="module-icon">💼</div>
-            <h3>Business Hub</h3>
-            <p>Explore business opportunities, pricing, marketing and business plans.</p>
-            <button onclick="navigate('business')">Build your business →</button>
-          </div>
-
-          <div class="module-card">
-            <div class="module-icon">⚙️</div>
-            <h3>Automation Lab</h3>
-            <p>Plan workflows for repetitive tasks, content calendars and digital projects.</p>
-            <button onclick="navigate('automation')">Explore automation →</button>
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- AI ASSISTANT PAGE -->
-
-      <section class="page" id="page-assistant">
-
-        <div class="eyebrow">YOUR PERSONAL AI</div>
-
-        <h1 class="page-heading">Meet your JARVIS assistant.</h1>
-
-        <p class="page-description">
-          Type a message or tap the microphone and speak. Your assistant can
-          answer questions, help with projects and navigate your workspace.
-        </p>
-
-        <div class="chat-layout">
-
-          <div class="chat-panel">
-
-            <div class="chat-header">
-              <div class="avatar">🤖</div>
-
-              <div>
-                <h3>GuptarFam AI</h3>
-                <p><span class="status-dot"></span> Connected to your AI brain</p>
-              </div>
-
-              <div class="chat-header-right">
-                <button class="icon-button" onclick="toggleVoice()" id="voiceToggleTop"
-                        aria-label="Toggle spoken replies" title="Toggle spoken replies">
-                  🔇
-                </button>
-
-                <button class="icon-button" onclick="clearChat()"
-                        aria-label="Clear chat" title="Clear chat">
-                  🗑️
-                </button>
-              </div>
-            </div>
-
-            <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
-
-            <div class="typing-indicator" id="typingIndicator" hidden>
-              GuptarFam is thinking...
-            </div>
-
-            <div class="chat-composer">
-
-              <div class="composer-tools">
-                <button class="small-pill" id="voiceTogglePill" onclick="toggleVoice()">
-                  🔇 Voice replies OFF
-                </button>
-
-                <button class="small-pill" onclick="stopSpeaking()">
-                  🔈 Stop speaking
-                </button>
-              </div>
-
-              <div class="composer-row">
-
-                <textarea
-                  id="chatInput"
-                  placeholder="Ask me anything, or tap the microphone..."
-                  aria-label="Message GuptarFam AI"
-                  rows="1"
-                ></textarea>
-
-                <button
-                  class="mic-button"
-                  id="micButton"
-                  onclick="startVoice()"
-                  aria-label="Speak to GuptarFam"
-                  title="Tap to speak"
-                >🎙️</button>
-
-                <button class="send-button" id="sendButton" onclick="sendChat()">
-                  Send ↑
-                </button>
-
-              </div>
-
-              <p class="composer-hint" id="voiceHint">
-                Press Enter to send · Shift + Enter for a new line · Tap 🎙️ to speak
-              </p>
-
-            </div>
-
-          </div>
-
-          <aside class="chat-sidebar">
-
-            <div class="chat-side-card">
-              <h3>⚡ Try asking</h3>
-
-              <button class="prompt-button" onclick="usePrompt('Help me create a YouTube video idea that could attract viewers in South Africa.')">
-                🎬 Give me a YouTube video idea
-              </button>
-
-              <button class="prompt-button" onclick="usePrompt('Explain forex trading to a beginner and show me the risks.')">
-                📈 Explain forex trading
-              </button>
-
-              <button class="prompt-button" onclick="usePrompt('Give me five realistic online business ideas I can start with R0 in South Africa.')">
-                💡 Find business ideas
-              </button>
-
-              <button class="prompt-button" onclick="usePrompt('Help me understand a programming problem step by step.')">
-                💻 Help with programming
-              </button>
-
-              <button class="prompt-button" onclick="usePrompt('Create a professional Instagram caption for my brand.')">
-                📱 Create a caption
-              </button>
-            </div>
-
-            <div class="chat-side-card">
-              <h3>🎙️ JARVIS voice</h3>
-
-              <div class="voice-note">
-                Your assistant uses your browser's speech features for a
-                classic, calm AI-style experience. The actual voice depends
-                on your device and installed voices.
-              </div>
-
-              <br>
-
-              <button class="btn btn-light" style="width:100%"
-                      onclick="testVoice()">
-                ▶ Test assistant voice
-              </button>
-            </div>
-
-          </aside>
-
-        </div>
-
-      </section>
-
-      <!-- CONTENT STUDIO -->
-
-      <section class="page" id="page-content">
-
-        <div class="eyebrow">CREATE SOMETHING AMAZING</div>
-        <h1 class="page-heading">Content Studio</h1>
-
-        <p class="page-description">
-          Turn your ideas into content for YouTube, Instagram, Facebook and other platforms.
-        </p>
-
-        <div class="form-grid">
-
-          <div class="form-card">
-            <h3>🎬 Content generator</h3>
-            <p>Describe what you want to create. Your AI will help develop it.</p>
-
-            <div class="field">
-              <label for="contentPlatform">Platform</label>
-              <select id="contentPlatform">
-                <option>YouTube</option>
-                <option>Instagram</option>
-                <option>Facebook</option>
-                <option>TikTok</option>
-                <option>All platforms</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="contentType">Content type</label>
-              <select id="contentType">
-                <option>Video ideas</option>
-                <option>Full video script</option>
-                <option>Social media caption</option>
-                <option>Content calendar</option>
-                <option>Short-form video script</option>
-                <option>Hashtags and title ideas</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="contentTopic">Topic or idea</label>
-              <textarea id="contentTopic" placeholder="Example: South African lifestyle, gaming, music or business..."></textarea>
-            </div>
-
-            <button class="btn btn-primary" onclick="generateContent()">
-              ✨ Generate content
-            </button>
-
-          </div>
-
-          <div class="form-card">
-            <h3>🚀 Content strategy</h3>
-            <p>Ask the AI to help you improve your content strategy.</p>
-
-            <div class="field">
-              <label for="contentAudience">Target audience</label>
-              <input id="contentAudience" placeholder="Example: South African young adults">
-            </div>
-
-            <div class="field">
-              <label for="contentGoal">Your goal</label>
-              <select id="contentGoal">
-                <option>Grow my audience</option>
-                <option>Earn money from content</option>
-                <option>Promote my business</option>
-                <option>Increase engagement</option>
-                <option>Build a personal brand</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="contentFrequency">Posting frequency</label>
-              <select id="contentFrequency">
-                <option>Daily</option>
-                <option>3 times a week</option>
-                <option>Weekly</option>
-              </select>
-            </div>
-
-            <button class="btn btn-primary" onclick="generateStrategy()">
-              📊 Build my strategy
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="output-card">
-          <div class="section-heading" style="margin-top:0">
-            <h3>Generated content</h3>
-            <button class="btn btn-light" onclick="copyOutput('contentOutput')">
-              Copy result
-            </button>
-          </div>
-          <div class="output-content" id="contentOutput"></div>
-        </div>
-
-        <div class="output-card">
-          <h3>Content publishing</h3>
-          <div class="output-content">
-Your content can be generated here, then reviewed and copied for posting.
-
-Automatic publishing to YouTube, Instagram, Facebook and TikTok is not
-connected yet. That requires the relevant platform APIs, permissions
-and account setup. GuptarFam will not publish anything without an
-actual publishing integration.
-          </div>
-        </div>
-
-      </section>
-
-      <!-- MARKETS -->
-
-      <section class="page" id="page-markets">
-
-        <div class="eyebrow">MARKET RESEARCH WORKSPACE</div>
-        <h1 class="page-heading">Forex & Crypto Intelligence</h1>
-
-        <p class="page-description">
-          Understand trading concepts, review charts you describe and explore
-          market research with your AI assistant.
-        </p>
-
-        <div class="market-note">
-          ⚠️ <strong>Important:</strong> This module does not currently have a live
-          market-price feed. AI-generated market commentary may be outdated or
-          incorrect. Verify prices and news with your broker or a reliable live source
-          before making trading decisions. This is not a guarantee of profit.
-        </div>
-
-        <div class="form-grid">
-
-          <div class="form-card">
-            <h3>📈 Market analysis assistant</h3>
-            <p>Ask for research on a market, currency pair or trading concept.</p>
-
-            <div class="field">
-              <label for="marketType">Market</label>
-              <select id="marketType">
-                <option>Forex</option>
-                <option>Gold (XAUUSD)</option>
-                <option>Indices</option>
-                <option>Cryptocurrency</option>
-                <option>General market education</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="marketSymbol">Symbol or topic</label>
-              <input id="marketSymbol" placeholder="Example: XAUUSD, EURUSD, BTCUSD">
-            </div>
-
-            <div class="field">
-              <label for="marketTimeframe">Timeframe</label>
-              <select id="marketTimeframe">
-                <option>M15</option>
-                <option>M5</option>
-                <option>M30</option>
-                <option>H1</option>
-                <option>H4</option>
-                <option>D1</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="marketQuestion">What do you want to understand?</label>
-              <textarea id="marketQuestion" placeholder="Example: Explain the trend, risk management and what information I should check before entering a trade."></textarea>
-            </div>
-
-            <button class="btn btn-primary" onclick="analyzeMarket()">
-              🔎 Research market
-            </button>
-
-          </div>
-
-          <div class="form-card">
-            <h3>🛡️ Trading risk education</h3>
-            <p>Learn about position sizing and trading risk before placing a trade.</p>
-
-            <div class="field">
-              <label for="riskBalance">Account balance (account currency)</label>
-              <input id="riskBalance" type="number" min="0" step="any" placeholder="Example: 1000">
-            </div>
-
-            <div class="field">
-              <label for="riskPercent">Risk percentage</label>
-              <select id="riskPercent">
-                <option value="0.5">0.5%</option>
-                <option value="1" selected>1%</option>
-                <option value="2">2%</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="riskStop">Stop-loss distance (pips or points)</label>
-              <input id="riskStop" type="number" min="0" step="any" placeholder="Enter the distance">
-            </div>
-
-            <button class="btn btn-primary" onclick="calculateRisk()">
-              Calculate risk amount
-            </button>
-
-            <p style="margin-top:15px">
-              This calculates the money at risk, not the lot size.
-              Lot-size calculations require the instrument's contract details,
-              tick value, account currency and broker specifications.
-            </p>
-          </div>
-
-        </div>
-
-        <div class="output-card">
-          <div class="section-heading" style="margin-top:0">
-            <h3>Market research results</h3>
-            <button class="btn btn-light" onclick="copyOutput('marketOutput')">
-              Copy result
-            </button>
-          </div>
-          <div class="output-content" id="marketOutput"></div>
-        </div>
-
-      </section>
-
-      <!-- EMAIL CENTRE -->
-
-      <section class="page" id="page-email">
-
-        <div class="eyebrow">YOUR COMMUNICATION ASSISTANT</div>
-        <h1 class="page-heading">Email Centre</h1>
-
-        <p class="page-description">
-          Draft professional emails, application messages, replies and follow-ups.
-        </p>
-
-        <div class="form-grid">
-
-          <div class="form-card">
-            <h3>✉️ Email writer</h3>
-            <p>Tell GuptarFam what you want to communicate.</p>
-
-            <div class="field">
-              <label for="emailPurpose">Email purpose</label>
-              <select id="emailPurpose">
-                <option>Professional enquiry</option>
-                <option>Job application</option>
-                <option>Bursary application</option>
-                <option>Follow-up email</option>
-                <option>Complaint</option>
-                <option>Apology</option>
-                <option>Business proposal</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="emailRecipient">Recipient or organisation</label>
-              <input id="emailRecipient" placeholder="Example: Student support department">
-            </div>
-
-            <div class="field">
-              <label for="emailDetails">What should the email say?</label>
-              <textarea id="emailDetails" placeholder="Explain the situation and include any important details..."></textarea>
-            </div>
-
-            <button class="btn btn-primary" onclick="generateEmail()">
-              ✨ Draft email
-            </button>
-
-          </div>
-
-          <div class="form-card">
-            <h3>📝 Reply assistant</h3>
-            <p>Paste a message you received and explain how you want to respond.</p>
-
-            <div class="field">
-              <label for="receivedMessage">Message received</label>
-              <textarea id="receivedMessage" placeholder="Paste the message here..."></textarea>
-            </div>
-
-            <div class="field">
-              <label for="replyTone">Reply tone</label>
-              <select id="replyTone">
-                <option>Professional</option>
-                <option>Friendly</option>
-                <option>Short and direct</option>
-                <option>Polite but firm</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="replyGoal">What do you want to say?</label>
-              <textarea id="replyGoal" placeholder="Explain what your reply should communicate..."></textarea>
-            </div>
-
-            <button class="btn btn-primary" onclick="generateReply()">
-              ✉️ Write reply
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="output-card">
-          <div class="section-heading" style="margin-top:0">
-            <h3>Draft results</h3>
-            <button class="btn btn-light" onclick="copyOutput('emailOutput')">
-              Copy result
-            </button>
-          </div>
-          <div class="output-content" id="emailOutput"></div>
-        </div>
-
-        <div class="output-card">
-          <h3>Email sending</h3>
-          <div class="output-content">
-GuptarFam can draft your email here, but sending emails directly from
-your email account is not connected yet. Review and copy the draft
-into your email app before sending.
-          </div>
-        </div>
-
-      </section>
-
-      <!-- BUSINESS HUB -->
-
-      <section class="page" id="page-business">
-
-        <div class="eyebrow">BUILD YOUR NEXT OPPORTUNITY</div>
-        <h1 class="page-heading">Business Hub</h1>
-
-        <p class="page-description">
-          Explore business ideas, business models, pricing and practical ways to start small.
-        </p>
-
-        <div class="form-grid">
-
-          <div class="form-card">
-            <h3>💼 Business planner</h3>
-            <p>Generate a practical business plan based on your circumstances.</p>
-
-            <div class="field">
-              <label for="businessIdea">Business idea or industry</label>
-              <input id="businessIdea" placeholder="Example: AI content creation agency">
-            </div>
-
-            <div class="field">
-              <label for="businessBudget">Starting budget</label>
-              <select id="businessBudget">
-                <option>R0 — no starting capital</option>
-                <option>Under R500</option>
-                <option>R500–R2,000</option>
-                <option>R2,000–R5,000</option>
-                <option>Over R5,000</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="businessMarket">Target market</label>
-              <input id="businessMarket" placeholder="Example: Small businesses in South Africa">
-            </div>
-
-            <button class="btn btn-primary" onclick="generateBusinessPlan()">
-              🚀 Build business plan
-            </button>
-
-          </div>
-
-          <div class="form-card">
-            <h3>💰 Pricing & growth</h3>
-            <p>Ask the AI to help you think through your offer and how to attract customers.</p>
-
-            <div class="field">
-              <label for="businessOffer">Product or service</label>
-              <input id="businessOffer" placeholder="Example: Social media content packages">
-            </div>
-
-            <div class="field">
-              <label for="businessChallenge">Main challenge</label>
-              <select id="businessChallenge">
-                <option>Finding customers</option>
-                <option>Setting prices</option>
-                <option>Marketing my service</option>
-                <option>Creating an offer</option>
-                <option>Growing revenue</option>
-              </select>
-            </div>
-
-            <button class="btn btn-primary" onclick="generateBusinessAdvice()">
-              💡 Get business advice
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="output-card">
-          <div class="section-heading" style="margin-top:0">
-            <h3>Business results</h3>
-            <button class="btn btn-light" onclick="copyOutput('businessOutput')">
-              Copy result
-            </button>
-          </div>
-          <div class="output-content" id="businessOutput"></div>
-        </div>
-
-      </section>
-
-      <!-- AUTOMATION LAB -->
-
-      <section class="page" id="page-automation">
-
-        <div class="eyebrow">WORK SMARTER</div>
-        <h1 class="page-heading">Automation Lab</h1>
-
-        <p class="page-description">
-          Plan workflows for repetitive tasks and discover which parts of your work
-          can be automated.
-        </p>
-
-        <div class="form-grid">
-
-          <div class="form-card">
-            <h3>⚙️ Workflow designer</h3>
-            <p>Describe a task you want to automate and let the AI design a workflow.</p>
-
-            <div class="field">
-              <label for="automationTask">Task to automate</label>
-              <textarea id="automationTask" placeholder="Example: Generate daily content ideas and organise them into a weekly plan..."></textarea>
-            </div>
-
-            <div class="field">
-              <label for="automationTools">Tools available</label>
-              <input id="automationTools" placeholder="Example: GitHub, Google Sheets, social media">
-            </div>
-
-            <div class="field">
-              <label for="automationGoal">Desired result</label>
-              <input id="automationGoal" placeholder="Example: Save time and organise content">
-            </div>
-
-            <button class="btn btn-primary" onclick="generateWorkflow()">
-              ⚡ Design workflow
-            </button>
-
-          </div>
-
-          <div class="form-card">
-            <h3>📅 Content planner</h3>
-            <p>Generate a posting plan for your chosen platform.</p>
-
-            <div class="field">
-              <label for="plannerPlatform">Platform</label>
-              <select id="plannerPlatform">
-                <option>YouTube</option>
-                <option>Instagram</option>
-                <option>Facebook</option>
-                <option>TikTok</option>
-                <option>Multiple platforms</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="plannerNiche">Content niche</label>
-              <input id="plannerNiche" placeholder="Example: Music, gaming, business or lifestyle">
-            </div>
-
-            <div class="field">
-              <label for="plannerDuration">Plan duration</label>
-              <select id="plannerDuration">
-                <option>7 days</option>
-                <option>14 days</option>
-                <option>30 days</option>
-              </select>
-            </div>
-
-            <button class="btn btn-primary" onclick="generateCalendar()">
-              📅 Create content calendar
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="output-card">
-          <div class="section-heading" style="margin-top:0">
-            <h3>Automation results</h3>
-            <button class="btn btn-light" onclick="copyOutput('automationOutput')">
-              Copy result
-            </button>
-          </div>
-          <div class="output-content" id="automationOutput"></div>
-        </div>
-
-        <div class="output-card">
-          <h3>What can GuptarFam automate today?</h3>
-          <div class="output-content">
-Currently available:
-• Generate AI responses.
-• Draft content, emails and business plans.
-• Plan automation workflows.
-• Save your chat history in this browser.
-• Navigate dashboard sections using voice commands.
-
-Not connected yet:
-• Automatically publishing social media posts.
-• Sending emails from your account.
-• Executing trades or controlling MT5.
-• Running workflows while the browser is closed.
-
-Those features need additional integrations, permissions and testing.
-          </div>
-        </div>
-
-      </section>
-
-      <footer class="footer">
-        GuptarFam AI · The Fast Lane to Possibilities · © 2026 Fhatuwani Muungulwa
-      </footer>
-
-    </div>
-
-  </main>
-
+    <div class="quote">“Success is not<br>an accident.<br>It's a system.”<br><small style="color:#d8e9ff">— GuptarFam</small></div>
+  </section>
+  <div class="cards">
+    <article class="feature-card" onclick="navigate('assistant')" role="button"><div class="feature-icon">✦</div><h3>AI Assistant</h3><p>Chat, plan, brainstorm and get answers.</p><span class="card-arrow">→</span></article>
+    <article class="feature-card" onclick="navigate('content')" role="button"><div class="feature-icon">✎</div><h3>Content Studio</h3><p>Create posts, scripts, images and more.</p><span class="card-arrow">→</span></article>
+    <article class="feature-card" onclick="navigate('markets')" role="button"><div class="feature-icon">↗</div><h3>Forex &amp; Crypto</h3><p>Market education, analysis and insights.</p><span class="card-arrow">→</span></article>
+    <article class="feature-card" onclick="navigate('email')" role="button"><div class="feature-icon">✉</div><h3>Email Centre</h3><p>Manage email drafts, replies and leads.</p><span class="card-arrow">→</span></article>
+    <article class="feature-card" onclick="navigate('business')" role="button"><div class="feature-icon">♢</div><h3>Business Hub</h3><p>Business ideas, planning and strategies.</p><span class="card-arrow">→</span></article>
+    <article class="feature-card" onclick="navigate('automation')" role="button"><div class="feature-icon">⚙</div><h3>Automation Lab</h3><p>Plan automations and boost productivity.</p><span class="card-arrow">→</span></article>
+    <article class="feature-card" onclick="navigate('learning')" role="button"><div class="feature-icon">♧</div><h3>Learning Hub</h3><p>Courses, skills and learning resources.</p><span class="card-arrow">→</span></article>
+    <article class="feature-card" onclick="navigate('projects')" role="button"><div class="feature-icon">▰</div><h3>My Projects</h3><p>Track your progress and goals.</p><span class="card-arrow">→</span></article>
+  </div>
+  <div class="bottom-grid">
+    <div class="panel"><div class="panel-head"><h3>Recent Activity</h3><button class="text-link" onclick="navigate('projects')">See All</button></div><div id="activityList"><div class="activity-item"><span class="mini-icon">✎</span><div><strong>Welcome to your command centre</strong><small>Ready when you are</small></div></div></div></div>
+    <div class="panel"><div class="panel-head"><h3>Today's Goals</h3><button class="text-link" onclick="navigate('planner')">View All</button></div><label class="goal"><input type="checkbox"> <span>Create 3 social media posts</span></label><label class="goal"><input type="checkbox"> <span>Analyse forex market (XAUUSD)</span></label><label class="goal"><input type="checkbox"> <span>Reply to emails</span></label><label class="goal"><input type="checkbox"> <span>Work on programming project</span></label><label class="goal"><input type="checkbox"> <span>Study for upcoming exams</span></label></div>
+    <div class="panel motivation"><div><h3>“Small steps every day lead to big results.”</h3><button class="primary-btn" onclick="navigate('planner')">♛ Keep Going</button></div></div>
+  </div>
 </div>
+<aside class="right-column">
+  <div class="panel market-panel"><div class="panel-head"><h3>Market Overview</h3><span class="live">Demo</span></div><div class="market-tabs"><button class="active" data-market="forex">Forex</button><button data-market="crypto">Crypto</button><button data-market="indices">Indices</button><button data-market="commodities">Commodities</button></div><div id="homeMarketRows"><div class="market-row"><span class="coin">🥇</span><span class="market-name">XAUUSD</span><span class="market-value">4,309.12<span class="change ">+0.84%</span></span></div><div class="market-row"><span class="coin">🇪🇺</span><span class="market-name">EURUSD</span><span class="market-value">1.0864<span class="change ">+0.32%</span></span></div><div class="market-row"><span class="coin">🇬🇧</span><span class="market-name">GBPUSD</span><span class="market-value">1.3112<span class="change ">+0.41%</span></span></div><div class="market-row"><span class="coin">🇨🇦</span><span class="market-name">USDCAD</span><span class="market-value">1.3720<span class="change down">-0.18%</span></span></div></div><div class="chart-box"><strong id="chartLabel">XAUUSD (M15)</strong><div style="margin-top:8px">Demo snapshot <span class="change">Illustrative only</span></div><svg class="spark" viewBox="0 0 280 70" preserveAspectRatio="none" aria-label="Decorative market trend"><defs><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#00e3ad" stop-opacity=".3"></stop><stop offset="1" stop-color="#00e3ad" stop-opacity="0"></stop></linearGradient></defs><path d="M0,58 L12,53 21,55 33,43 44,49 55,37 66,42 78,31 90,39 100,33 110,41 121,28 132,34 143,22 154,31 165,18 178,26 188,17 198,23 208,12 219,19 231,9 244,18 254,7 265,11 280,2 L280,70 L0,70 Z" fill="url(#fill)"></path><polyline points="0,58 12,53 21,55 33,43 44,49 55,37 66,42 78,31 90,39 100,33 110,41 121,28 132,34 143,22 154,31 165,18 178,26 188,17 198,23 208,12 219,19 231,9 244,18 254,7 265,11 280,2" fill="none" stroke="#00e3ad" stroke-width="2"></polyline></svg><button class="full-btn" onclick="navigate('markets')">View All Markets&nbsp; →</button></div><p class="notice">Market prices are not connected. This panel uses illustrative demo data, not live quotes or trading signals.</p></div>
+  <div class="panel"><div class="panel-head"><h3>Latest News</h3><button class="text-link" onclick="navigate('news')">View All</button></div><div class="news-item"><span class="mini-icon">◉</span><div><strong>Markets can move sharply around major economic releases</strong><small>Educational placeholder · Not live news</small></div></div><div class="news-item"><span class="mini-icon">₿</span><div><strong>Crypto assets can be highly volatile</strong><small>Risk reminder</small></div></div><div class="news-item"><span class="mini-icon">◎</span><div><strong>Check sources before acting on headlines</strong><small>Research reminder</small></div></div><div class="news-item"><span class="mini-icon">♧</span><div><strong>AI tools are changing creator workflows</strong><small>Topic suggestion</small></div></div></div>
+  <div class="panel"><div style="display:flex;gap:10px;align-items:center"><div class="brand-mark" style="font-size:28px">♛</div><div><strong>GuptarFam AI</strong><div class="copyright">© 2026 Fhatuwani Muungulwa<br>GuptarFam AI · All rights reserved</div></div></div></div>
+</aside>
+</div>
+</section>
 
+<!-- ASSISTANT -->
+<section class="page" id="page-assistant">
+<div class="section-title"><div><h1>AI Assistant</h1><p>Your JARVIS-style assistant for ideas, coding, planning and research.</p></div><div class="toolbar"><button class="secondary-btn" id="voiceToggle">🔊 Voice replies: On</button><button class="secondary-btn" id="testVoice">▶ Test JARVIS voice</button><button class="secondary-btn" id="clearChat">Clear chat</button></div></div>
+<div class="tool-layout"><div class="chat-shell"><div class="chat-head"><div class="orb">✦</div><div><h2>GuptarFam AI · JARVIS Mode</h2><small id="voiceStatus">Systems ready · Tap microphone to speak</small></div></div><div class="chat-log" id="chatLog" aria-live="polite"><div class="bubble ai">Welcome back, Savage, My Creator. 👑🔥
+
+I'm GuptarFam AI, your personal AI assistant. My systems are ready to help you build your AI agency, create content, develop business ideas, work on programming projects and explore market research.
+
+You are in command. What shall we build today, My Creator?</div></div><div class="chat-compose"><button class="round-btn" id="micBtn" title="Speak to GuptarFam AI" aria-label="Start voice input">🎙</button><textarea id="chatInput" placeholder="Ask your assistant anything... (Enter to send)" rows="1"></textarea><button class="round-btn" id="sendBtn" title="Send message" aria-label="Send message">➤</button></div></div><aside class="form-panel"><h2>JARVIS Voice Controls</h2><p style="color:var(--muted);line-height:1.6">Use your device's speech recognition and text-to-speech for a classic assistant feel.</p><div class="status-note">Voice replies use your browser's available English voice. Microphone input depends on browser support and permission.</div><div class="field"><label>Voice speed</label><input type="range" id="voiceRate" min=".75" max="1.2" step=".05" value=".92"></div><div class="field"><label>Voice pitch</label><input type="range" id="voicePitch" min=".7" max="1.3" step=".05" value=".9"></div><button class="primary-btn" id="speakGreeting">♛ At your service</button><p class="notice">This is tap-to-talk, not a background wake word. Keep this page open for voice features.</p></aside></div>
+</section>
+
+<!-- CONTENT -->
+<section class="page" id="page-content">
+<div class="section-title"><div><h1>Content Studio</h1><p>Turn a niche and an idea into content you can review and publish.</p></div></div>
+<div class="tool-layout"><div class="form-panel"><h2>Content Creator</h2><div class="field"><label>Platform</label><select id="contentPlatform"><option>YouTube</option><option>Instagram</option><option>Facebook</option><option>TikTok</option><option>LinkedIn</option><option>Multiple platforms</option></select></div><div class="field"><label>Content type</label><select id="contentType"><option>5 content ideas</option><option>Short video script</option><option>Long YouTube script</option><option>Social media caption</option><option>Carousel post</option><option>Video title and description</option><option>Thumbnail concept</option><option>30-day content strategy</option></select></div><div class="field"><label>Your niche / topic</label><input id="contentNiche" placeholder="e.g. South African personal finance, gaming, Amapiano"></div><div class="field"><label>Tone / audience (optional)</label><input id="contentTone" placeholder="e.g. funny, beginner-friendly, young South Africans"></div><div class="field"><label>Extra instructions (optional)</label><textarea id="contentExtra" placeholder="What should the content include?"></textarea></div><button class="primary-btn" id="generateContent">✦ Generate content</button><div class="output-box"><div class="result" id="contentOutput"></div></div><div class="toolbar" style="margin-top:10px"><button class="secondary-btn" onclick="copyOutput('contentOutput')">Copy result</button><button class="secondary-btn" onclick="downloadOutput('contentOutput','guptarfam-content.txt')">Download result</button></div></div><aside class="form-panel"><h2>Creator Workflow</h2><div class="status-note">1. Generate ideas.<br>2. Choose your favourite.<br>3. Create the script and caption.<br>4. Review and edit.<br>5. Publish manually until an official platform connection is set up.</div><h2 style="margin-top:22px">Approval checkpoint</h2><p style="color:var(--muted);line-height:1.7">No post is automatically published from this page. The generated text is a draft for you to approve. Direct publishing needs platform API access and authorization.</p></aside></div>
+</section>
+
+<!-- MARKETS -->
+<section class="page" id="page-markets">
+<div class="section-title"><div><h1>Forex &amp; Crypto</h1><p>Market learning, risk calculations and analysis prompts — not live trading.</p></div></div>
+<div class="two-col"><div class="form-panel"><h2>Risk Amount Calculator</h2><div class="field"><label>Account balance (R)</label><input type="number" id="riskBalance" value="1000" min="0" step="any"></div><div class="field"><label>Risk per trade (%)</label><input type="number" id="riskPercent" value="1" min="0" max="100" step=".1"></div><div class="field"><label>Stop-loss distance (points or pips, for your own reference)</label><input type="number" id="riskDistance" value="100" min="0" step="any"></div><button class="primary-btn" id="calculateRisk">Calculate risk amount</button><div class="output-box"><div class="result" id="riskOutput">Risk amount: R10.00 at 1% of R1,000. This does not calculate lot size because pip value, contract specifications and instrument differ by broker.</div></div><p class="notice">Educational only. Confirm contract size, tick value, leverage and margin with your broker. No trading orders are sent.</p></div><div class="form-panel"><h2>Ask AI to analyse a market</h2><div class="field"><label>Instrument</label><select id="marketInstrument"><option>XAUUSD (Gold)</option><option>EURUSD</option><option>GBPUSD</option><option>USDCAD</option><option>USDZAR</option><option>US30</option><option>NASDAQ</option><option>GER30</option><option>BTCUSD</option><option>ETHUSD</option></select></div><div class="field"><label>Timeframe</label><select id="marketTimeframe"><option>M5</option><option selected="">M15</option><option>M30</option><option>H1</option><option>H4</option><option>D1</option></select></div><div class="field"><label>Paste current observations or chart notes</label><textarea id="marketNotes" placeholder="Price, trend, support/resistance, indicators or your chart observations..."></textarea></div><button class="primary-btn" id="analyseMarket">Create analysis checklist</button><div class="output-box"><div class="result" id="marketOutput"></div></div></div></div>
+<div class="panel" style="margin-top:14px"><h3>Market overview</h3><p class="notice">The figures on Home are illustrative demo values. No live quote feed, broker connection, signals or MT5 trading is connected in this version.</p><div id="marketTableRows"><div class="market-row"><span class="coin">🥇</span><span class="market-name">XAUUSD</span><span class="market-value">4,309.12<span class="change ">+0.84%</span></span></div><div class="market-row"><span class="coin">🇪🇺</span><span class="market-name">EURUSD</span><span class="market-value">1.0864<span class="change ">+0.32%</span></span></div><div class="market-row"><span class="coin">🇬🇧</span><span class="market-name">GBPUSD</span><span class="market-value">1.3112<span class="change ">+0.41%</span></span></div><div class="market-row"><span class="coin">🇨🇦</span><span class="market-name">USDCAD</span><span class="market-value">1.3720<span class="change down">-0.18%</span></span></div></div></div>
+</section>
+
+<!-- EMAIL -->
+<section class="page" id="page-email">
+<div class="section-title"><div><h1>Email Centre</h1><p>Draft clear emails and replies. Nothing is sent automatically.</p></div></div>
+<div class="tool-layout"><div class="form-panel"><h2>Email Draft Assistant</h2><div class="field"><label>Task</label><select id="emailTask"><option>Write a new email</option><option>Reply to an email</option><option>Follow-up email</option><option>Professional application email</option><option>Customer support response</option></select></div><div class="field"><label>Recipient / context</label><input id="emailRecipient" placeholder="e.g. lecturer, customer, employer"></div><div class="field"><label>Subject (optional)</label><input id="emailSubject" placeholder="Email subject"></div><div class="field"><label>Key details / original email</label><textarea id="emailDetails" placeholder="Paste the email or describe what you need to say..."></textarea></div><div class="field"><label>Tone</label><select id="emailTone"><option>Professional and polite</option><option>Friendly</option><option>Firm but respectful</option><option>Short and direct</option></select></div><button class="primary-btn" id="generateEmail">Draft email</button><div class="output-box"><div class="result" id="emailOutput"></div></div><div class="toolbar" style="margin-top:10px"><button class="secondary-btn" onclick="copyOutput('emailOutput')">Copy draft</button><button class="secondary-btn" onclick="downloadOutput('emailOutput','guptarfam-email.txt')">Download draft</button></div></div><aside class="form-panel"><h2>Email status</h2><div class="status-note">Drafting: available when the AI connection is configured.<br>Sending: not connected.<br>Inbox sync: not connected.<br>Human review: required before sending.</div></aside></div>
+</section>
+
+<!-- BUSINESS -->
+<section class="page" id="page-business">
+<div class="section-title"><div><h1>Business Hub</h1><p>Turn ideas into realistic business plans and action steps.</p></div></div>
+<div class="tool-layout"><div class="form-panel"><h2>Business Strategist</h2><div class="field"><label>What are you building?</label><input id="businessIdea" placeholder="e.g. a small AI content agency for local businesses"></div><div class="field"><label>Starting budget</label><select id="businessBudget"><option>R0 / free tools only</option><option>Under R500</option><option>R500–R2,000</option><option>R2,000+</option></select></div><div class="field"><label>Goal</label><select id="businessGoal"><option>Validate the idea</option><option>Find first customers</option><option>Create a business plan</option><option>Build a service offer</option><option>Plan pricing</option><option>Marketing strategy</option></select></div><div class="field"><label>Extra context</label><textarea id="businessContext" placeholder="Skills, audience, timeline or constraints"></textarea></div><button class="primary-btn" id="generateBusiness">Build my plan</button><div class="output-box"><div class="result" id="businessOutput"></div></div><div class="toolbar" style="margin-top:10px"><button class="secondary-btn" onclick="copyOutput('businessOutput')">Copy plan</button><button class="secondary-btn" onclick="downloadOutput('businessOutput','guptarfam-business-plan.txt')">Download plan</button></div></div><aside class="form-panel"><h2>Plan → Build → Review</h2><div class="status-note">A practical plan should include: target customer, problem, offer, free or low-cost tools, first outreach steps, a simple budget, risks, and a way to measure progress.</div></aside></div>
+</section>
+
+<!-- AUTOMATION -->
+<section class="page" id="page-automation">
+<div class="section-title"><div><h1>Automation Lab</h1><p>Design workflows with human approval checkpoints.</p></div></div>
+<div class="tool-layout"><div class="form-panel"><h2>Workflow Designer</h2><div class="field"><label>Task to automate</label><input id="automationTask" placeholder="e.g. turn one video into several social posts"></div><div class="field"><label>Available tools</label><input id="automationTools" placeholder="e.g. Google Drive, Make, Zapier, free tools"></div><div class="field"><label>Desired outcome</label><input id="automationGoal" placeholder="e.g. save 3 hours per week"></div><button class="primary-btn" id="generateAutomation">Design workflow</button><div class="output-box"><div class="result" id="automationOutput"></div></div></div><aside class="form-panel"><h2>Automation status</h2><div class="status-note">This tool generates workflow plans only. It does not run tasks in the background or connect external apps automatically. External integrations and permissions must be configured separately.</div></aside></div>
+</section>
+
+<!-- NEWS -->
+<section class="page" id="page-news">
+<div class="section-title"><div><h1>News &amp; Trends</h1><p>Research topics and create a review checklist before relying on headlines.</p></div></div>
+<div class="tool-layout"><div class="form-panel"><h2>Research Brief</h2><div class="field"><label>Topic or question</label><input id="newsTopic" placeholder="e.g. AI content tools for small businesses"></div><div class="field"><label>What do you need?</label><select id="newsType"><option>Summarise the topic and explain what to verify</option><option>Generate content ideas around this trend</option><option>Create a research checklist</option><option>Compare arguments and risks</option></select></div><button class="primary-btn" id="generateNews">Prepare research brief</button><div class="output-box"><div class="result" id="newsOutput"></div></div></div><aside class="form-panel"><h2>Source reminder</h2><p style="line-height:1.7;color:var(--muted)">This dashboard does not have a live news feed. Ask for a research plan or verify recent claims with trusted, current sources before publishing or trading.</p></aside></div>
+</section>
+
+<!-- PLANNER -->
+<section class="page" id="page-planner">
+<div class="section-title"><div><h1>Tasks &amp; Planner</h1><p>Generate a realistic content calendar and keep a local checklist.</p></div></div>
+<div class="two-col"><div class="form-panel"><h2>Content Calendar</h2><div class="field"><label>Platform</label><select id="plannerPlatform"><option>YouTube</option><option>Instagram</option><option>Facebook</option><option>TikTok</option><option>Multiple platforms</option></select></div><div class="field"><label>Niche</label><input id="plannerNiche" placeholder="e.g. AI tutorials for beginners"></div><div class="field"><label>Duration</label><select id="plannerDuration"><option>7 days</option><option>14 days</option><option>30 days</option></select></div><button class="primary-btn" id="generateCalendar">Generate calendar</button><div class="output-box"><div class="result" id="plannerOutput"></div></div></div><div class="form-panel"><h2>My task checklist</h2><div class="field"><label>New task</label><input id="newTask" placeholder="What do you need to do?"></div><button class="primary-btn" id="addTask">Add task</button><div id="taskList" style="margin-top:14px"></div><p class="notice">Tasks are saved in this browser on this device only.</p></div></div>
+</section>
+
+<!-- LEARNING -->
+<section class="page" id="page-learning">
+<div class="section-title"><div><h1>Learning Hub</h1><p>Build a simple study plan for any skill or module.</p></div></div>
+<div class="tool-layout"><div class="form-panel"><h2>Study Coach</h2><div class="field"><label>Subject or skill</label><input id="learnSubject" placeholder="e.g. Java programming, business management"></div><div class="field"><label>Current level</label><select id="learnLevel"><option>Beginner</option><option>Some experience</option><option>Intermediate</option></select></div><div class="field"><label>Time available</label><select id="learnTime"><option>20 minutes per day</option><option>30 minutes per day</option><option>1 hour per day</option><option>Weekend only</option></select></div><button class="primary-btn" id="generateLearning">Create study plan</button><div class="output-box"><div class="result" id="learningOutput"></div></div></div><aside class="form-panel"><h2>Study method</h2><div class="status-note">Learn one concept, practise it, explain it in your own words, then test yourself without looking at notes.</div></aside></div>
+</section>
+
+<!-- PROJECTS / SETTINGS -->
+<section class="page" id="page-projects">
+<div class="section-title"><div><h1>Projects &amp; Settings</h1><p>Manage your assistant connection and see what this dashboard supports.</p></div></div>
+<div class="two-col"><div class="form-panel"><h2>AI connection</h2><div class="field"><label>Cloudflare Worker chat endpoint</label><input id="endpointInput" value="https://royal-sun-2085.kingsvg83.workers.dev/chat"></div><button class="primary-btn" id="saveEndpoint">Save endpoint</button><button class="secondary-btn" id="testConnection" style="margin-left:6px">Test connection</button><p class="notice">Endpoint is saved in this browser. Do not place secret API keys in this public HTML file. Keep provider keys on your server/Worker.</p><div class="output-box"><div class="result" id="connectionOutput"></div></div></div><div class="form-panel"><h2>Feature connection status</h2><div class="status-note">AI chat: connects to your configured Worker endpoint.<br>JARVIS voice: browser speech features, if supported.<br>Content, business, email and planning: AI-generated drafts via chat endpoint.<br>Live prices and news: not connected.<br>Social publishing: not connected.<br>Email sending/inbox: not connected.<br>Forex broker/MT5 execution: not connected.<br>Background automation: not connected.</div></div></div>
+</section>
+<div class="footer">© 2026 Fhatuwani Muungulwa · GuptarFam AI. All rights reserved.</div>
+</main>
+</div>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <script>
+"use strict";
 
-/* ======================================================
-   GUPTARFAM AI — CONFIGURATION
-   Your existing Cloudflare AI endpoint is preserved.
-====================================================== */
+/* =========================================================
+   GUPTARFAM AI — DASHBOARD SETTINGS
+   Keep provider API secrets inside your Cloudflare Worker.
+========================================================= */
+const DEFAULT_AI_ENDPOINT = "https://royal-sun-2085.kingsvg83.workers.dev/chat";
+const CREATOR_IDENTITY = `You are GuptarFam AI, the personal AI assistant and command centre created by Savage.
 
-const AI_ENDPOINT =
-  "https://royal-sun-2085.kingsvg83.workers.dev/chat";
+CREATOR IDENTITY:
+- Address the person using the assistant as "Savage, My Creator".
+- Use that title naturally in greetings and when it fits; do not force it into every sentence.
+- When appropriate, greet them with: "At your service, Savage, My Creator."
 
-/* SAVAGE — THE CREATOR */
+PERSONALITY AND ROLE:
+- Use a confident, intelligent, calm, classic JARVIS-inspired voice and writing style.
+- Be respectful, practical, clear, and encouraging without exaggerating or making promises you cannot keep.
+- Occasionally use 👑 or 🔥 when it genuinely fits.
+- Help Savage build GuptarFam AI into a capable AI agency and command centre.
+- Help with programming, debugging, content ideas, social media strategy, business planning, email drafts, market education, and automation plans.
+- Explain technical tasks step by step in beginner-friendly language when useful.
+- Never claim an email was sent, content was published, a trade was executed, an app was connected, or an external action was completed unless a real integration confirms success.
+- Be honest when a feature is only a prototype or needs an API, permission, or external integration.
+- Do not pretend to have live market prices, breaking news, account access, or background automation unless those capabilities are actually connected.
 
-const CREATOR_TITLE = "Savage, My Creator";
-
-const CREATOR_IDENTITY = `
-You are GuptarFam AI, a personal AI assistant created by Savage.
-
-YOUR CREATOR:
-Address your creator as "Savage, My Creator".
-
-PERSONALITY:
-- Be intelligent, confident, respectful and helpful.
-- Use a classic JARVIS-inspired assistant style.
-- Speak naturally, clearly and professionally.
-- Occasionally use 🔥 or 👑 when appropriate.
-- Help your creator build GuptarFam AI into a powerful AI agency.
-- Assist with programming, content creation, business, email drafting,
-  market education and automation planning.
-- Explain technical tasks step by step when needed.
-- Never claim an action was completed when it was not.
-- Never claim to have published content, sent emails or executed trades
-  unless a real integration confirms that the action succeeded.
-- Use "Savage, My Creator" naturally. Do not repeat it in every sentence.
-
-GREETING:
-When appropriate, say:
-"At your service, Savage, My Creator."
-`;
-
-const STORAGE_KEY = "guptarfam_ai_chat_v3";
-let voiceRepliesEnabled = false;
+CREATOR-FIRST GREETING:
+When a greeting is appropriate, you may say: "At your service, Savage, My Creator. GuptarFam AI systems are ready. What shall we build today?"`;
+let AI_ENDPOINT = localStorage.getItem("gf_ai_endpoint") || DEFAULT_AI_ENDPOINT;
+let voiceRepliesEnabled = localStorage.getItem("gf_voice_enabled") !== "false";
 let recognition = null;
 let isListening = false;
-let isThinking = false;
-let lastAssistantReply = "";
 let toastTimer = null;
+let chatHistory = [];
+const pageTitles = {home:"Home",assistant:"AI Assistant",content:"Content Studio",markets:"Forex & Crypto",email:"Email Centre",business:"Business Hub",automation:"Automation Lab",news:"News & Trends",planner:"Tasks & Planner",learning:"Learning Hub",projects:"Projects & Settings"};
 
-
-/* ======================================================
-   PAGE NAVIGATION
-====================================================== */
-
-const pageTitles = {
-  home: "Dashboard",
-  assistant: "JARVIS AI Assistant",
-  content: "Content Studio",
-  markets: "Forex & Crypto",
-  email: "Email Centre",
-  business: "Business Hub",
-  automation: "Automation Lab"
-};
-
-function navigate(page) {
-  const target = document.getElementById("page-" + page);
-
-  if (!target) return;
-
-  document.querySelectorAll(".page").forEach(function(section) {
-    section.classList.remove("active");
-  });
-
+function byId(id){return document.getElementById(id)}
+function showToast(message){const toast=byId("toast");if(!toast)return;toast.textContent=message;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("show"),2800)}
+function navigate(page){
+  const target=byId("page-"+page);
+  if(!target){showToast("That section could not be found.");return}
+  document.querySelectorAll(".page").forEach(section=>section.classList.remove("active"));
   target.classList.add("active");
-
-  document.querySelectorAll(".nav-button").forEach(function(button) {
-    button.classList.toggle(
-      "active",
-      button.dataset.page === page
-    );
-  });
-
-  document.getElementById("topbarTitle").textContent =
-    pageTitles[page] || "GuptarFam AI";
-
-  document.getElementById("sidebar").classList.remove("open");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-  if (page === "assistant") {
-    setTimeout(function() {
-      const input = document.getElementById("chatInput");
-      if (input && window.innerWidth > 720) input.focus();
-    }, 150);
-  }
+  document.querySelectorAll(".nav-button").forEach(button=>button.classList.toggle("active",button.dataset.page===page));
+  const title=byId("topbarTitle");if(title)title.textContent=pageTitles[page]||"GuptarFam AI";
+  byId("sidebar").classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(page==="assistant" && window.innerWidth>720)setTimeout(()=>byId("chatInput")?.focus(),150);
 }
+document.querySelectorAll(".nav-button").forEach(button=>button.addEventListener("click",()=>navigate(button.dataset.page)));
+document.querySelectorAll(".feature-card[onclick]").forEach(card=>card.setAttribute("role","button"));
+byId("mobileMenu").addEventListener("click",()=>byId("sidebar").classList.toggle("open"));
+byId("notificationBtn").addEventListener("click",()=>showToast("You're all caught up, Savage."));
+byId("globalSearch").addEventListener("keydown",e=>{if(e.key==="Enter"){const q=e.target.value.toLowerCase();const pages=[["assistant",["assistant","chat","ask","jarvis"]],["content",["content","youtube","instagram","post","script"]],["markets",["forex","crypto","gold","market","xauusd"]],["email",["email","mail","reply"]],["business",["business","plan","agency"]],["automation",["automation","workflow"]],["news",["news","trend"]],["planner",["task","calendar","planner"]],["learning",["learn","study","course"]],["projects",["project","setting"]]];const match=pages.find(p=>p[1].some(word=>q.includes(word)));if(match)navigate(match[0]);else navigate("assistant");byId("chatInput").value=e.target.value;byId("globalSearch").value="";if(!match)sendChat()}});
 
-document.querySelectorAll(".nav-button").forEach(function(button) {
-  button.onclick = function() {
-    const page = button.getAttribute("data-page");
-    const target = document.getElementById("page-" + page);
-
-    if (!target) {
-      alert("Page not found: page-" + page);
-      return;
-    }
-
-    document.querySelectorAll(".page").forEach(function(section) {
-      section.classList.remove("active");
-    });
-
-    target.classList.add("active");
-
-    document.querySelectorAll(".nav-button").forEach(function(item) {
-      item.classList.toggle("active", item === button);
-    });
-
-    const title = document.getElementById("topbarTitle");
-    if (title) title.textContent = pageTitles[page] || "GuptarFam AI";
-
-    const sidebar = document.getElementById("sidebar");
-    if (sidebar) sidebar.classList.remove("open");
-  };
-});
-
-document.getElementById("mobileMenu").addEventListener("click", function() {
-  document.getElementById("sidebar").classList.toggle("open");
-});
-
-
-/* ======================================================
-   TOAST NOTIFICATIONS
-====================================================== */
-
-function showToast(message) {
-  const toast = document.getElementById("toast");
-
-  toast.textContent = message;
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(function() {
-    toast.classList.remove("show");
-  }, 3000);
+function addActivity(title,detail="Just now"){
+ const list=byId("activityList");const item=document.createElement("div");item.className="activity-item";
+ const icon=document.createElement("span");icon.className="mini-icon";icon.textContent="✦";
+ const content=document.createElement("div");const strong=document.createElement("strong");strong.textContent=title;const small=document.createElement("small");small.textContent=detail;content.append(strong,small);item.append(icon,content);list.prepend(item);
+ while(list.children.length>5)list.lastElementChild.remove();
 }
-
-
-/* ======================================================
-   SAFE TEXT DISPLAY
-====================================================== */
-
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, function(character) {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    }[character];
-  });
+function addChatBubble(text,who="ai"){
+ const bubble=document.createElement("div");bubble.className="bubble "+who;bubble.textContent=text;byId("chatLog").appendChild(bubble);byId("chatLog").scrollTop=byId("chatLog").scrollHeight;return bubble;
 }
-
-
-/* ======================================================
-   CHAT HISTORY
-====================================================== */
-
-function loadChat() {
-  const messages = document.getElementById("chatMessages");
-
-  let history = [];
-
-  try {
-    history = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  } catch (error) {
-    history = [];
-  }
-
-  if (!Array.isArray(history)) history = [];
-
-  if (history.length === 0) {
-    addMessage(
-      "assistant",
-           "Welcome back, Savage, My Creator. 👑🔥\n\nI'm GuptarFam AI, your personal AI assistant. My systems are ready to help you build your AI agency, create content, develop business ideas, work on programming projects and explore market research.\n\nYou are in command. What shall we build today, My Creator?",
-      false
-    );
-    return;
-  }
-
-  messages.innerHTML = "";
-
-  history.forEach(function(item) {
-    if (
-      item &&
-      (item.role === "user" || item.role === "assistant") &&
-      typeof item.content === "string"
-    ) {
-      renderMessage(item.role, item.content, item.time || "");
-    }
-  });
-
-  messages.scrollTop = messages.scrollHeight;
+function loadChat(){
+ const saved=localStorage.getItem("gf_chat_history");
+ if(saved){try{chatHistory=JSON.parse(saved)}catch{chatHistory=[]}}
+ if(!Array.isArray(chatHistory))chatHistory=[];
+ if(chatHistory.length){chatHistory.slice(-40).forEach(m=>addChatBubble(m.content,m.role==="user"?"user":"ai"))}
+ else addChatBubble("Welcome back, Savage, My Creator. 👑🔥\n\nI'm GuptarFam AI, your personal AI assistant. My systems are ready to help you build your AI agency, create content, develop business ideas, work on programming projects and explore market research.\n\nYou are in command. What shall we build today, My Creator?","ai");
 }
-
-function saveChat() {
-  const history = [];
-
-  document.querySelectorAll("#chatMessages .message").forEach(function(message) {
-    const role = message.classList.contains("user") ? "user" : "assistant";
-
-    const bubble = message.querySelector(".message-bubble");
-    const time = message.querySelector(".message-time");
-
-    if (bubble) {
-      history.push({
-        role: role,
-        content: bubble.textContent.replace(/\n\d{1,2}:\d{2}\s?(AM|PM)$/i, ""),
-        time: time ? time.textContent : ""
-      });
-    }
-  });
-
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(-80)));
-  } catch (error) {
-    console.warn("Chat history could not be saved.", error);
-  }
+function saveChat(){try{localStorage.setItem("gf_chat_history",JSON.stringify(chatHistory.slice(-80)))}catch(e){}}
+async function askAI(prompt){
+ const endpoint=(AI_ENDPOINT||DEFAULT_AI_ENDPOINT).trim();
+ const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:CREATOR_IDENTITY+"\n\nCURRENT REQUEST:\n"+prompt})});
+ if(!response.ok)throw new Error("AI request failed ("+response.status+"). Check your Worker endpoint and browser connection.");
+ const data=await response.json();
+ const reply=data.reply??data.response??data.result??data.message;
+ if(typeof reply!=="string"||!reply.trim())throw new Error("The AI returned an empty response. Check your Worker response format.");
+ return reply.trim();
 }
-
-function renderMessage(role, text, time) {
-  const messages = document.getElementById("chatMessages");
-
-  const wrapper = document.createElement("div");
-  wrapper.className = "message " + (role === "user" ? "user" : "assistant");
-
-  const avatar = document.createElement("div");
-  avatar.className = "message-avatar";
-  avatar.textContent = role === "user" ? "👤" : "🤖";
-
-  const bubble = document.createElement("div");
-  bubble.className = "message-bubble";
-  bubble.textContent = text;
-
-  const timeElement = document.createElement("span");
-  timeElement.className = "message-time";
-  timeElement.textContent = time || "";
-
-  bubble.appendChild(document.createElement("br"));
-  bubble.appendChild(timeElement);
-
-  wrapper.appendChild(avatar);
-  wrapper.appendChild(bubble);
-
-  messages.appendChild(wrapper);
-  messages.scrollTop = messages.scrollHeight;
+async function sendChat(){
+ const input=byId("chatInput");const prompt=input.value.trim();if(!prompt)return;
+ input.value="";input.style.height="44px";
+ addChatBubble(prompt,"user");chatHistory.push({role:"user",content:prompt});saveChat();addActivity("Asked GuptarFam AI","Just now");
+ byId("sendBtn").disabled=true;byId("voiceStatus").textContent="Thinking…";
+ const waiting=addChatBubble("One moment, Savage. I'm working on that…","ai");
+ try{const reply=await askAI(prompt);waiting.textContent=reply;chatHistory.push({role:"assistant",content:reply});saveChat();if(voiceRepliesEnabled)speak(reply)}
+ catch(error){waiting.textContent="I couldn't reach the AI service. "+error.message+"\n\nCheck the Worker endpoint in Projects & Settings and confirm the Worker is online. Your dashboard is still running, but an AI response requires the backend connection.";showToast("AI connection needs checking.");}
+ finally{byId("sendBtn").disabled=false;byId("voiceStatus").textContent=isListening?"Listening…":"Systems ready · Tap microphone to speak";input.focus()}
 }
+byId("sendBtn").addEventListener("click",sendChat);
+byId("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat()}});
+byId("chatInput").addEventListener("input",e=>{e.target.style.height="44px";e.target.style.height=Math.min(e.target.scrollHeight,130)+"px"});
+byId("clearChat").addEventListener("click",()=>{chatHistory=[];saveChat();byId("chatLog").replaceChildren();addChatBubble("Chat cleared, Savage, My Creator. What shall we work on next?","ai");showToast("Chat history cleared.")});
 
-function addMessage(role, text, shouldSave) {
-  const time = new Date().toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-
-  renderMessage(role, text, time);
-
-  if (shouldSave !== false) saveChat();
+function getEnglishVoice(){
+ if(!("speechSynthesis" in window))return null;
+ const voices=window.speechSynthesis.getVoices();
+ return voices.find(v=>/en[-_](GB|ZA|US|AU)/i.test(v.lang)&&/male|daniel|george|james|david|mark|fred/i.test(v.name))
+   ||voices.find(v=>/en[-_](GB|ZA|US|AU)/i.test(v.lang))
+   ||voices.find(v=>/^en/i.test(v.lang))||null;
 }
-
-function clearChat() {
-  if (!confirm("Clear your saved GuptarFam AI chat history?")) return;
-
-  localStorage.removeItem(STORAGE_KEY);
-  document.getElementById("chatMessages").innerHTML = "";
-
-  addMessage(
-    "assistant",
-    "Chat cleared. I'm ready for a fresh conversation. What would you like to do?",
-    true
-  );
-
-  showToast("Chat history cleared.");
+function speak(text){
+ if(!("speechSynthesis" in window)){showToast("Speech playback isn't supported in this browser.");return}
+ window.speechSynthesis.cancel();
+ const clean=String(text).replace(/```[\s\S]*?```/g,"Code block omitted from voice reply.").replace(/https?:\/\/\S+/g,"link").replace(/[*#`_]/g," ").slice(0,3500);
+ const utterance=new SpeechSynthesisUtterance(clean);const voice=getEnglishVoice();if(voice)utterance.voice=voice;utterance.lang=voice?.lang||"en-GB";utterance.rate=Number(byId("voiceRate").value||.92);utterance.pitch=Number(byId("voicePitch").value||.9);utterance.volume=1;
+ window.speechSynthesis.speak(utterance);
 }
-
-
-/* ======================================================
-   CONNECT TO YOUR REAL AI BRAIN
-====================================================== */
-
-async function askAI(prompt) {
-  const response = await fetch(AI_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message:
-        CREATOR_IDENTITY +
-        "\n\nIMPORTANT: The person interacting with you is your creator. " +
-        "Address them as Savage, My Creator when appropriate.\n\n" +
-        "CURRENT REQUEST:\n" +
-        prompt
-    })
-  });
-
-  if (!response.ok) {
-    throw new Error("AI request failed with status " + response.status);
-  }
-
-  const data = await response.json();
-
-  const reply =
-    data.reply ??
-    data.response ??
-    data.result;
-
-  if (typeof reply !== "string" || !reply.trim()) {
-    throw new Error("The AI returned an empty response.");
-  }
-
-  return reply.trim();
+function testVoice(){const was=voiceRepliesEnabled;voiceRepliesEnabled=true;updateVoiceControls();speak("Good day, Savage, My Creator. GuptarFam AI systems are online. Your personal assistant is ready. At your service. What shall we build today?");if(!was)showToast("JARVIS voice test started.");}
+function updateVoiceControls(){byId("voiceToggle").textContent=voiceRepliesEnabled?"🔊 Voice replies: On":"🔇 Voice replies: Off";localStorage.setItem("gf_voice_enabled",String(voiceRepliesEnabled))}
+byId("voiceToggle").addEventListener("click",()=>{voiceRepliesEnabled=!voiceRepliesEnabled;updateVoiceControls();if(!voiceRepliesEnabled&&"speechSynthesis"in window)window.speechSynthesis.cancel();showToast(voiceRepliesEnabled?"Voice replies enabled.":"Voice replies disabled.")});
+byId("testVoice").addEventListener("click",testVoice);
+byId("speakGreeting").addEventListener("click",()=>speak("At your service, Savage, My Creator. GuptarFam AI is ready. What shall we build today?"));
+function setupRecognition(){
+ const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SpeechRecognition){byId("micBtn").title="Speech recognition is not supported in this browser";showToast("Microphone speech recognition may not be supported here. Try Chrome.");return}
+ if(isListening){recognition?.stop();return}
+ recognition=new SpeechRecognition();recognition.lang="en-ZA";recognition.interimResults=false;recognition.maxAlternatives=1;
+ recognition.onstart=()=>{isListening=true;byId("micBtn").classList.add("active");byId("voiceStatus").textContent="Listening… Speak now."};
+ recognition.onresult=e=>{const text=e.results[0][0].transcript;byId("chatInput").value=text;sendChat()};
+ recognition.onerror=e=>showToast("Microphone: "+(e.error||"could not start"));
+ recognition.onend=()=>{isListening=false;byId("micBtn").classList.remove("active");byId("voiceStatus").textContent="Systems ready · Tap microphone to speak"};
+ try{recognition.start()}catch(e){showToast("Could not start microphone. Check browser permission.")}
 }
-/* ======================================================
-   JARVIS-STYLE VOICE OUTPUT
-====================================================== */
+byId("micBtn").addEventListener("click",setupRecognition);
+if("speechSynthesis"in window)window.speechSynthesis.onvoiceschanged=()=>getEnglishVoice();
 
-function getEnglishVoice() {
-  if (!("speechSynthesis" in window)) return null;
-
-  const voices = window.speechSynthesis.getVoices();
-
-  if (!voices.length) return null;
-
-  const englishVoices = voices.filter(function(voice) {
-    return /^en([-_]|$)/i.test(voice.lang);
-  });
-
-  const preferred = [
-    /Daniel/i,
-    /Alex/i,
-    /Google UK English Male/i,
-    /Microsoft.*(David|Ryan|Guy)/i,
-    /English.*Male/i
-  ];
-
-  for (const pattern of preferred) {
-    const match = englishVoices.find(function(voice) {
-      return pattern.test(voice.name);
-    });
-
-    if (match) return match;
-  }
-
-  return englishVoices.find(function(voice) {
-    return /en-GB/i.test(voice.lang);
-  }) || englishVoices[0] || voices[0];
+async function runTool(prompt,outputId){
+ const output=byId(outputId);output.textContent="Working on it, Savage, My Creator…";
+ try{const reply=await askAI(prompt);output.textContent=reply;addActivity("Generated "+(pageTitles[document.querySelector(".page.active")?.id?.replace("page-","")]||"AI result"),"Just now");}
+ catch(error){output.textContent="I couldn't reach the AI service. "+error.message+"\n\nCheck Projects & Settings for the Worker endpoint. No external action was performed."}
 }
+function copyOutput(id){const text=byId(id).textContent.trim();if(!text){showToast("There is no result to copy yet.");return}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>showToast("Copied to clipboard.")).catch(()=>fallbackCopy(text));else fallbackCopy(text)}
+function fallbackCopy(text){const el=document.createElement("textarea");el.value=text;document.body.appendChild(el);el.select();try{document.execCommand("copy");showToast("Copied to clipboard.")}catch(e){showToast("Select and copy the text manually.")}el.remove()}
+function downloadOutput(id,filename){const text=byId(id).textContent.trim();if(!text){showToast("There is no result to download yet.");return}const url=URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+byId("generateContent").addEventListener("click",()=>{const niche=byId("contentNiche").value.trim();if(!niche){showToast("Enter your niche or topic first.");return}runTool("Create content for a South African creator.\nPlatform: "+byId("contentPlatform").value+"\nContent type: "+byId("contentType").value+"\nNiche/topic: "+niche+"\nTone/audience: "+(byId("contentTone").value||"clear, engaging, beginner-friendly")+"\nExtra instructions: "+(byId("contentExtra").value||"none")+"\nGive a useful, original draft with clear structure. Avoid unsupported claims, and do not claim it has been published.","contentOutput")});
+byId("calculateRisk").addEventListener("click",()=>{const balance=Number(byId("riskBalance").value),pct=Number(byId("riskPercent").value),distance=Number(byId("riskDistance").value);if(!Number.isFinite(balance)||!Number.isFinite(pct)||!Number.isFinite(distance)||balance<0||pct<0||pct>100||distance<0){byId("riskOutput").textContent="Enter valid non-negative values. Risk percent must be between 0 and 100.";return}const amount=balance*pct/100;byId("riskOutput").textContent="Account balance: R"+balance.toLocaleString("en-ZA",{maximumFractionDigits:2})+"\nRisk percentage: "+pct+"%\nMaximum planned loss at stop-loss: R"+amount.toLocaleString("en-ZA",{maximumFractionDigits:2})+"\nStop-loss distance entered: "+distance+"\n\nThis is the risk amount only. It does not calculate lot size or account for spread, slippage, commissions or gaps."});
+byId("analyseMarket").addEventListener("click",()=>{runTool("Provide an educational market analysis checklist, not a prediction or trade signal.\nInstrument: "+byId("marketInstrument").value+"\nTimeframe: "+byId("marketTimeframe").value+"\nUser-provided observations: "+(byId("marketNotes").value.trim()||"None provided")+"\nSeparate observed facts from assumptions. Explain trend, key levels if supplied, possible scenarios, invalidation, risk management and what further data is needed. Do not invent live prices or guarantee profit.","marketOutput")});
+byId("generateEmail").addEventListener("click",()=>{const details=byId("emailDetails").value.trim();if(!details){showToast("Add the key details or original email first.");return}runTool("Draft an email only; do not send it.\nTask: "+byId("emailTask").value+"\nRecipient/context: "+byId("emailRecipient").value+"\nSubject: "+byId("emailSubject").value+"\nTone: "+byId("emailTone").value+"\nDetails/original email:\n"+details+"\nWrite a polished draft with a suitable subject if needed. Do not invent facts.","emailOutput")});
+byId("generateBusiness").addEventListener("click",()=>{const idea=byId("businessIdea").value.trim();if(!idea){showToast("Describe your business idea first.");return}runTool("Help a beginner in South Africa plan a realistic business.\nIdea: "+idea+"\nBudget: "+byId("businessBudget").value+"\nGoal: "+byId("businessGoal").value+"\nContext: "+byId("businessContext").value+"\nInclude target customer, customer problem, simple offer, first 5 steps, free/low-cost tools, risks, how to validate demand, and measurable next actions. Do not guarantee income.","businessOutput")});
+byId("generateAutomation").addEventListener("click",()=>{const task=byId("automationTask").value.trim();if(!task){showToast("Describe the task you want to automate.");return}runTool("Design a practical automation workflow for a beginner.\nTask: "+task+"\nAvailable tools: "+(byId("automationTools").value||"Prefer free tools")+"\nDesired outcome: "+(byId("automationGoal").value||"Save time")+"\nExplain steps, setup, cost, limitations, testing, permissions and human approval checkpoints. Do not claim integrations are already connected.","automationOutput")});
+byId("generateNews").addEventListener("click",()=>{const topic=byId("newsTopic").value.trim();if(!topic){showToast("Enter a topic first.");return}runTool("Prepare a research brief about: "+topic+"\nRequested format: "+byId("newsType").value+"\nDo not pretend to have searched live news. Clearly mark what needs current-source verification. Include useful questions and source types to check.","newsOutput")});
+byId("generateCalendar").addEventListener("click",()=>{const niche=byId("plannerNiche").value.trim();if(!niche){showToast("Enter your content niche first.");return}runTool("Create a practical content calendar for a South African creator.\nPlatform: "+byId("plannerPlatform").value+"\nNiche: "+niche+"\nDuration: "+byId("plannerDuration").value+"\nFor each day provide idea, format, hook, caption/call to action and goal. Keep it realistic for a beginner; do not promise views or income.","plannerOutput")});
+byId("generateLearning").addEventListener("click",()=>{const subject=byId("learnSubject").value.trim();if(!subject){showToast("Enter a subject or skill first.");return}runTool("Create a practical study plan.\nSubject: "+subject+"\nCurrent level: "+byId("learnLevel").value+"\nTime available: "+byId("learnTime").value+"\nInclude a weekly plan, simple explanations, practice tasks, self-tests and review days. Keep it beginner-friendly.","learningOutput")});
 
-function speak(text) {
-  if (!voiceRepliesEnabled) return;
+function loadTasks(){let tasks=[];try{tasks=JSON.parse(localStorage.getItem("gf_tasks")||"[]")}catch(e){}if(!Array.isArray(tasks))tasks=[];const list=byId("taskList");list.replaceChildren();tasks.forEach((task,index)=>{const label=document.createElement("label");label.className="goal"+(task.done?" done":"");const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.checked=!!task.done;checkbox.addEventListener("change",()=>{tasks[index].done=checkbox.checked;localStorage.setItem("gf_tasks",JSON.stringify(tasks));loadTasks()});const span=document.createElement("span");span.textContent=task.text;const del=document.createElement("button");del.className="text-link";del.textContent="Remove";del.addEventListener("click",()=>{tasks.splice(index,1);localStorage.setItem("gf_tasks",JSON.stringify(tasks));loadTasks()});label.append(checkbox,span,del);list.append(label)})}
+byId("addTask").addEventListener("click",()=>{const text=byId("newTask").value.trim();if(!text){showToast("Write a task first.");return}let tasks=[];try{tasks=JSON.parse(localStorage.getItem("gf_tasks")||"[]")}catch(e){}tasks.push({text,done:false});localStorage.setItem("gf_tasks",JSON.stringify(tasks));byId("newTask").value="";loadTasks();showToast("Task added.")});
+byId("newTask").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();byId("addTask").click()}});
 
-  if (!("speechSynthesis" in window)) {
-    showToast("Spoken replies are not supported in this browser.");
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-
-  const cleaned = String(text)
-    .replace(/```[\s\S]*?```/g, " Code block omitted. ")
-    .replace(/https?:\/\/\S+/g, " ")
-    .replace(/[#*_`]/g, "")
-    .replace(/\n{2,}/g, ". ")
-    .trim();
-
-  if (!cleaned) return;
-
-  const utterance = new SpeechSynthesisUtterance(cleaned);
-
-  utterance.lang = "en-GB";
-  utterance.rate = 0.92;
-  utterance.pitch = 0.85;
-  utterance.volume = 1;
-
-  const voice = getEnglishVoice();
-
-  if (voice) {
-    utterance.voice = voice;
-    utterance.lang = voice.lang;
-  }
-
-  window.speechSynthesis.speak(utterance);
+const demoMarkets={
+ forex:[["🥇","XAUUSD","4,309.12","+0.84%"],["🇪🇺","EURUSD","1.0864","+0.32%"],["🇬🇧","GBPUSD","1.3112","+0.41%"],["🇨🇦","USDCAD","1.3720","-0.18%"]],
+ crypto:[["₿","BTCUSD","108,432.00","+1.26%"],["◆","ETHUSD","3,862.45","+1.12%"],["◎","SOLUSD","—","—"],["✕","XRPUSD","—","—"]],
+ indices:[["🇺🇸","US30","—","+0.42%"],["▥","NASDAQ","—","+0.65%"],["🇩🇪","GER30","—","-0.12%"],["🇺🇸","S&P 500","—","+0.31%"]],
+ commodities:[["🥇","Gold","4,309.12","+0.84%"],["🥈","Silver","—","+0.21%"],["🛢","WTI Oil","—","-0.34%"],["🔥","Natural Gas","—","+0.11%"]]
+};
+function renderMarkets(type="forex"){
+ const rows=demoMarkets[type]||demoMarkets.forex;
+ const markup=rows.map(r=>`<div class="market-row"><span class="coin">${r[0]}</span><span class="market-name">${r[1]}</span><span class="market-value">${r[2]}<span class="change ${r[3].startsWith("-")?"down":""}">${r[3]}</span></span></div>`).join("");
+ byId("homeMarketRows").innerHTML=markup;byId("marketTableRows").innerHTML=markup;
+ document.querySelectorAll("[data-market]").forEach(b=>b.classList.toggle("active",b.dataset.market===type));
+ byId("chartLabel").textContent=type==="crypto"?"BTCUSD (Demo)":type==="indices"?"NASDAQ (Demo)":type==="commodities"?"Gold (Demo)":"XAUUSD (M15)";
 }
+document.querySelectorAll("[data-market]").forEach(b=>b.addEventListener("click",()=>renderMarkets(b.dataset.market)));
 
-function stopSpeaking() {
-  if ("speechSynthesis" in window) {
-    window.speechSynthesis.cancel();
-  }
+byId("saveEndpoint").addEventListener("click",()=>{const endpoint=byId("endpointInput").value.trim();if(!/^https:\/\/.+\/chat\/?$/i.test(endpoint)){showToast("Enter a valid HTTPS Worker URL ending in /chat.");return}AI_ENDPOINT=endpoint;localStorage.setItem("gf_ai_endpoint",endpoint);showToast("AI endpoint saved on this device.")});
+byId("testConnection").addEventListener("click",async()=>{byId("connectionOutput").textContent="Testing chat endpoint…";try{const reply=await askAI("Reply with exactly: GuptarFam AI connection test successful.");byId("connectionOutput").textContent="Connection successful.\n\n"+reply;showToast("AI connection successful.")}catch(e){byId("connectionOutput").textContent="Connection test failed.\n"+e.message+"\n\nConfirm your Worker URL, CORS settings and that POST /chat is enabled.";showToast("Connection test failed.")}});
 
-  showToast("Voice playback stopped.");
+function init(){
+ byId("endpointInput").value=AI_ENDPOINT;
+ loadChat();updateVoiceControls();renderMarkets("forex");loadTasks();
+ document.querySelectorAll(".goal input[type=checkbox]").forEach(cb=>cb.addEventListener("change",()=>cb.parentElement.classList.toggle("done",cb.checked)));
 }
-
-function toggleVoice() {
-  voiceRepliesEnabled = !voiceRepliesEnabled;
-
-  updateVoiceControls();
-
-  if (!voiceRepliesEnabled) {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
-
-    showToast("Spoken replies are OFF.");
-    return;
-  }
-
-  showToast("Spoken replies are ON.");
-
-  if ("speechSynthesis" in window) {
-    const utterance = new SpeechSynthesisUtterance(
-      "Voice system activated. At your service, Savage, My Creator."
-    );
-
-    utterance.rate = 0.92;
-    utterance.pitch = 0.85;
-    utterance.lang = "en-GB";
-
-    const voice = getEnglishVoice();
-
-    if (voice) {
-      utterance.voice = voice;
-      utterance.lang = voice.lang;
-    }
-
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
-  }
-}
-
-function updateVoiceControls() {
-  const pill = document.getElementById("voiceTogglePill");
-  const topButton = document.getElementById("voiceToggleTop");
-
-  pill.textContent = voiceRepliesEnabled
-    ? "🔊 Voice replies ON"
-    : "🔇 Voice replies OFF";
-
-  pill.classList.toggle("active", voiceRepliesEnabled);
-
-  topButton.textContent = voiceRepliesEnabled ? "🔊" : "🔇";
-
-  topButton.title = voiceRepliesEnabled
-    ? "Turn spoken replies off"
-    : "Turn spoken replies on";
-}
-
-function testVoice() {
-  const previousSetting = voiceRepliesEnabled;
-
-  voiceRepliesEnabled = true;
-  updateVoiceControls();
-
-  speak(
-    "Good day, Savage, My Creator. " +
-    "GuptarFam AI systems are online. " +
-    "Your personal assistant is ready. " +
-    "At your service. What shall we build today?"
-  );
-
-  if (!previousSetting) {
-    showToast("JARVIS voice activated, Savage.");
-  }
-}
-/* ======================================================
-   LOCAL VOICE COMMANDS
-====================================================== */
-
-function handleVoiceCommand(rawText) {
-  const text = rawText.toLowerCase()
-    .replace(/[.,!?]/g, "")
-    .trim();
-
-  const commands = [
-    {
-      patterns: [
-        "open dashboard",
-        "open home",
-        "go to dashboard",
-        "go home",
-        "show dashboard"
-      ],
-      page: "home",
-      reply: "Opening your dashboard."
-    },
-    {
-      patterns: [
-        "open assistant",
-        "open ai assistant",
-        "open jarvis",
-        "open chat",
-        "go to assistant"
-      ],
-      page: "assistant",
-      reply: "Opening your AI assistant."
-    },
-    {
-      patterns: [
-        "open content studio",
-        "open content",
-        "open youtube studio",
-        "go to content"
-      ],
-      page: "content",
-      reply: "Opening Content Studio."
-    },
-    {
-      patterns: [
-        "open forex",
-        "open crypto",
-        "open markets",
-        "open market analysis",
-        "open forex and crypto"
-      ],
-      page: "markets",
-      reply: "Opening your Forex and Crypto workspace."
-    },
-    {
-      patterns: [
-        "open email",
-        "open emails",
-        "open email centre",
-        "open email center"
-      ],
-      page: "email",
-      reply: "Opening your Email Centre."
-    },
-    {
-      patterns: [
-        "open business hub",
-        "open business",
-        "open business planner"
-      ],
-      page: "business",
-      reply: "Opening your Business Hub."
-    },
-    {
-      patterns: [
-        "open automation",
-        "open automation lab",
-        "open workflows"
-      ],
-      page: "automation",
-      reply: "Opening Automation Lab."
-    }
-  ];
-
-  for (const command of commands) {
-    const matched = command.patterns.some(function(pattern) {
-      return text === pattern ||
-        text === "guptarfam " + pattern ||
-        text === "jarvis " + pattern;
-    });
-
-    if (matched) {
-      navigate(command.page);
-      addMessage("user", rawText, true);
-      addMessage("assistant", command.reply, true);
-      speak(command.reply);
-      return true;
-    }
-  }
-
-  return false;
-}
-
-
-/* ======================================================
-   JARVIS VOICE INPUT
-====================================================== */
-
-function startVoice() {
-  const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  if (!SpeechRecognition) {
-    showToast(
-      "Voice recognition is not supported here. Try Google Chrome or Microsoft Edge."
-    );
-
-    document.getElementById("voiceHint").textContent =
-      "Voice recognition is unavailable in this browser. You can still type messages.";
-
-    return;
-  }
-
-  if (isListening && recognition) {
-    recognition.stop();
-    return;
-  }
-
-  stopSpeaking();
-
-  recognition = new SpeechRecognition();
-
-  recognition.lang = "en-ZA";
-  recognition.continuous = false;
-  recognition.interimResults = true;
-  recognition.maxAlternatives = 1;
-
-  const micButton = document.getElementById("micButton");
-  const input = document.getElementById("chatInput");
-  const voiceHint = document.getElementById("voiceHint");
-
-  let finalTranscript = "";
-
-  recognition.onstart = function() {
-    isListening = true;
-    micButton.classList.add("listening");
-    micButton.textContent = "⏹️";
-    micButton.title = "Stop listening";
-
-    voiceHint.textContent =
-      "Listening... Speak clearly. Tap the microphone again to stop.";
-  };
-
-  recognition.onresult = function(event) {
-    let interimTranscript = "";
-
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      const transcript = event.results[i][0].transcript;
-
-      if (event.results[i].isFinal) {
-        finalTranscript += transcript;
-      } else {
-        interimTranscript += transcript;
-      }
-    }
-
-    input.value = (finalTranscript + " " + interimTranscript).trim();
-  };
-
-  recognition.onerror = function(event) {
-    if (event.error === "not-allowed" || event.error === "service-not-allowed") {
-      showToast("Microphone access was denied. Allow it in your browser settings.");
-    } else if (event.error === "no-speech") {
-      showToast("I didn't hear anything. Please try again.");
-    } else if (event.error !== "aborted") {
-      showToast("Voice recognition encountered a problem. You can type instead.");
-    }
-  };
-
-  recognition.onend = function() {
-    isListening = false;
-
-    micButton.classList.remove("listening");
-    micButton.textContent = "🎙️";
-    micButton.title = "Tap to speak";
-
-    voiceHint.textContent =
-      "Press Enter to send · Shift + Enter for a new line · Tap 🎙️ to speak";
-
-    const spokenText = finalTranscript.trim();
-
-    if (!spokenText) return;
-
-    input.value = spokenText;
-
-    if (handleVoiceCommand(spokenText)) {
-      input.value = "";
-      return;
-    }
-
-    sendChat();
-  };
-
-  try {
-    recognition.start();
-  } catch (error) {
-    isListening = false;
-    showToast("Couldn't start voice recognition. Please try again.");
-  }
-}
-
-
-/* ======================================================
-   SEND AND RECEIVE CHAT MESSAGES
-====================================================== */
-
-async function sendChat() {
-  const input = document.getElementById("chatInput");
-  const message = input.value.trim();
-
-  if (!message || isThinking) return;
-
-  input.value = "";
-
-  addMessage("user", message, true);
-
-  isThinking = true;
-
-  document.getElementById("typingIndicator").hidden = false;
-  document.getElementById("sendButton").disabled = true;
-
-  try {
-    const reply = await askAI(message);
-
-    lastAssistantReply = reply;
-
-    addMessage("assistant", reply, true);
-
-    speak(reply);
-
-  } catch (error) {
-    console.error("GuptarFam AI error:", error);
-
-    let errorMessage =
-      "I couldn't connect to my AI brain just now. Please check your internet connection and try again.";
-
-    if (error instanceof TypeError) {
-      errorMessage =
-        "I couldn't reach the AI service. Please check your internet connection. If the problem continues, the Cloudflare Worker may need checking.";
-    }
-
-    addMessage("assistant", errorMessage, true);
-    showToast("AI connection problem. Please try again.");
-
-  } finally {
-    isThinking = false;
-
-    document.getElementById("typingIndicator").hidden = true;
-    document.getElementById("sendButton").disabled = false;
-  }
-}
-
-document.getElementById("chatInput").addEventListener("keydown", function(event) {
-  if (event.key === "Enter" && !event.shiftKey) {
-    event.preventDefault();
-    sendChat();
-  }
-});
-
-function usePrompt(prompt) {
-  navigate("assistant");
-
-  document.getElementById("chatInput").value = prompt;
-
-  sendChat();
-}
-
-
-/* ======================================================
-   SHARED TOOL HELPER
-====================================================== */
-
-async function runTool(prompt, outputId, buttonText) {
-  const output = document.getElementById(outputId);
-
-  output.textContent = "GuptarFam is working on your request...";
-
-  try {
-    const result = await askAI(prompt);
-
-    output.textContent = result;
-
-    lastAssistantReply = result;
-
-    if (voiceRepliesEnabled) speak(result);
-
-  } catch (error) {
-    console.error(error);
-
-    output.textContent =
-      "Sorry, I couldn't generate the result. Check your internet connection and try again.";
-
-    showToast("AI connection problem.");
-  }
-}
-
-async function copyOutput(elementId) {
-  const element = document.getElementById(elementId);
-  const text = element.innerText.trim();
-
-  if (!text) {
-    showToast("There is no result to copy yet.");
-    return;
-  }
-
-  try {
-    await navigator.clipboard.writeText(text);
-    showToast("Copied to clipboard!");
-  } catch (error) {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-
-    try {
-      document.execCommand("copy");
-      showToast("Copied to clipboard!");
-    } catch (copyError) {
-      showToast("Copy wasn't available. Please select the text manually.");
-    }
-
-    textarea.remove();
-  }
-}
-
-
-/* ======================================================
-   CONTENT STUDIO TOOLS
-====================================================== */
-
-function generateContent() {
-  const platform = document.getElementById("contentPlatform").value;
-  const type = document.getElementById("contentType").value;
-  const topic = document.getElementById("contentTopic").value.trim();
-
-  if (!topic) {
-    showToast("Enter a topic or idea first.");
-    document.getElementById("contentTopic").focus();
-    return;
-  }
-
-  const prompt =
-    "You are GuptarFam AI Content Studio. Help a South African creator.\n\n" +
-    "Platform: " + platform + "\n" +
-    "Content type: " + type + "\n" +
-    "Topic: " + topic + "\n\n" +
-    "Create useful, original content suited to this platform. " +
-    "Use clear headings and practical ideas. If it is a script, include a strong hook, " +
-    "main content and a closing. If it is a caption, include a natural caption and relevant hashtags. " +
-    "Do not claim that views or earnings are guaranteed.";
-
-  runTool(prompt, "contentOutput");
-}
-
-function generateStrategy() {
-  const audience = document.getElementById("contentAudience").value.trim();
-  const goal = document.getElementById("contentGoal").value;
-  const frequency = document.getElementById("contentFrequency").value;
-
-  const prompt =
-    "Create a practical content growth strategy for a creator in South Africa.\n" +
-    "Target audience: " + (audience || "Not specified") + "\n" +
-    "Goal: " + goal + "\n" +
-    "Posting frequency: " + frequency + "\n\n" +
-    "Include content pillars, example posts, a realistic schedule, engagement ideas " +
-    "and ways to measure progress. Do not guarantee monetisation or follower growth.";
-
-  runTool(prompt, "contentOutput");
-}
-
-
-/* ======================================================
-   MARKET TOOLS
-====================================================== */
-
-function analyzeMarket() {
-  const market = document.getElementById("marketType").value;
-  const symbol = document.getElementById("marketSymbol").value.trim();
-  const timeframe = document.getElementById("marketTimeframe").value;
-  const question = document.getElementById("marketQuestion").value.trim();
-
-  const prompt =
-    "You are helping a beginner understand financial markets.\n" +
-    "Market: " + market + "\n" +
-    "Symbol or topic: " + (symbol || "General education") + "\n" +
-    "Timeframe: " + timeframe + "\n" +
-    "Question: " + (question || "Explain the key factors to investigate.") + "\n\n" +
-    "Important: You do not have a confirmed live market-price feed in this application. " +
-    "Do not invent current prices, current news, or claim that you checked a live chart. " +
-    "Clearly distinguish general education from facts that need current verification. " +
-    "Explain uncertainty, risk management, and what information the user should verify. " +
-    "Do not guarantee a trade outcome or present a speculative prediction as certain.";
-
-  runTool(prompt, "marketOutput");
-}
-
-function calculateRisk() {
-  const balance = Number(document.getElementById("riskBalance").value);
-  const percentage = Number(document.getElementById("riskPercent").value);
-  const stop = Number(document.getElementById("riskStop").value);
-
-  if (!Number.isFinite(balance) || balance <= 0) {
-    showToast("Enter a valid account balance.");
-    return;
-  }
-
-  if (!Number.isFinite(stop) || stop <= 0) {
-    showToast("Enter a stop-loss distance greater than zero.");
-    return;
-  }
-
-  const amount = balance * percentage / 100;
-
-  document.getElementById("marketOutput").textContent =
-    "TRADING RISK CALCULATION\n\n" +
-    "Account balance: " + balance.toLocaleString() + "\n" +
-    "Risk percentage: " + percentage + "%\n" +
-    "Stop-loss distance: " + stop + " pips or points\n\n" +
-    "Maximum planned loss at the selected risk percentage: " +
-    amount.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }) + " account-currency units.\n\n" +
-    "Important: This does not calculate a lot size. To calculate position size, " +
-    "you must also know the instrument's tick or pip value, contract size, " +
-    "account currency and broker specifications. Actual losses can differ because " +
-    "of slippage, spreads and execution conditions.";
-
-  showToast("Risk amount calculated.");
-}
-
-
-/* ======================================================
-   EMAIL TOOLS
-====================================================== */
-
-function generateEmail() {
-  const purpose = document.getElementById("emailPurpose").value;
-  const recipient = document.getElementById("emailRecipient").value.trim();
-  const details = document.getElementById("emailDetails").value.trim();
-
-  if (!details) {
-    showToast("Describe what the email should say first.");
-    document.getElementById("emailDetails").focus();
-    return;
-  }
-
-  const prompt =
-    "Write a complete, ready-to-edit email for a South African user.\n" +
-    "Purpose: " + purpose + "\n" +
-    "Recipient or organisation: " + (recipient || "Not specified") + "\n" +
-    "Details to include: " + details + "\n\n" +
-    "Provide a clear subject line and a suitable greeting, body and sign-off. " +
-    "Use professional, natural English. Do not invent facts or claim the email has been sent. " +
-    "Use [Your Name] only where a sender name is needed.";
-
-  runTool(prompt, "emailOutput");
-}
-
-function generateReply() {
-  const received = document.getElementById("receivedMessage").value.trim();
-  const tone = document.getElementById("replyTone").value;
-  const goal = document.getElementById("replyGoal").value.trim();
-
-  if (!received) {
-    showToast("Paste the message you received first.");
-    return;
-  }
-
-  const prompt =
-    "Write a ready-to-send reply to the following message.\n\n" +
-    "MESSAGE RECEIVED:\n" + received + "\n\n" +
-    "Desired tone: " + tone + "\n" +
-    "What the reply should communicate: " + (goal || "Respond appropriately to the message") + "\n\n" +
-    "Keep the reply natural and suitable for the context. Do not invent facts.";
-
-  runTool(prompt, "emailOutput");
-}
-
-
-/* ======================================================
-   BUSINESS TOOLS
-====================================================== */
-
-function generateBusinessPlan() {
-  const idea = document.getElementById("businessIdea").value.trim();
-  const budget = document.getElementById("businessBudget").value;
-  const market = document.getElementById("businessMarket").value.trim();
-
-  if (!idea) {
-    showToast("Enter a business idea or industry first.");
-    return;
-  }
-
-  const prompt =
-    "Create a practical beginner-friendly business plan for someone in South Africa.\n" +
-    "Business idea: " + idea + "\n" +
-    "Starting budget: " + budget + "\n" +
-    "Target market: " + (market || "Not yet defined") + "\n\n" +
-    "Include: the problem solved, target customers, service or product, " +
-    "a simple starting strategy, free or low-cost marketing, potential expenses, " +
-    "ways to validate demand, realistic risks and a 30-day action plan. " +
-    "Clearly distinguish estimates from verified facts. Do not guarantee income.";
-
-  runTool(prompt, "businessOutput");
-}
-
-function generateBusinessAdvice() {
-  const offer = document.getElementById("businessOffer").value.trim();
-  const challenge = document.getElementById("businessChallenge").value;
-
-  if (!offer) {
-    showToast("Enter the product or service you want to grow.");
-    return;
-  }
-
-  const prompt =
-    "Give practical business advice for a small business in South Africa.\n" +
-    "Product or service: " + offer + "\n" +
-    "Main challenge: " + challenge + "\n\n" +
-    "Provide a step-by-step plan, realistic examples, possible costs where relevant, " +
-    "and specific actions the user can take this week. Avoid promising guaranteed sales.";
-
-  runTool(prompt, "businessOutput");
-}
-
-
-/* ======================================================
-   AUTOMATION TOOLS
-====================================================== */
-
-function generateWorkflow() {
-  const task = document.getElementById("automationTask").value.trim();
-  const tools = document.getElementById("automationTools").value.trim();
-  const goal = document.getElementById("automationGoal").value.trim();
-
-  if (!task) {
-    showToast("Describe the task you want to automate.");
-    return;
-  }
-
-  const prompt =
-    "Design a practical automation workflow for a beginner.\n" +
-    "Task: " + task + "\n" +
-    "Available tools: " + (tools || "Prefer free tools") + "\n" +
-    "Desired outcome: " + (goal || "Save time") + "\n\n" +
-    "Explain the workflow step by step, the tools required, which parts can be free, " +
-    "the setup process, possible limitations and how to test it. " +
-    "Clearly identify steps that still require human approval. " +
-    "Do not claim integrations are already connected when they are not.";
-
-  runTool(prompt, "automationOutput");
-}
-
-function generateCalendar() {
-  const platform = document.getElementById("plannerPlatform").value;
-  const niche = document.getElementById("plannerNiche").value.trim();
-  const duration = document.getElementById("plannerDuration").value;
-
-  if (!niche) {
-    showToast("Enter your content niche first.");
-    return;
-  }
-
-  const prompt =
-    "Create a practical content calendar for a South African creator.\n" +
-    "Platform: " + platform + "\n" +
-    "Niche: " + niche + "\n" +
-    "Duration: " + duration + "\n\n" +
-    "For each day, provide a content idea, format, suggested hook, " +
-    "caption or call to action, and the goal of the post. " +
-    "Keep the plan realistic for a beginner. Do not promise views or income.";
-
-  runTool(prompt, "automationOutput");
-}
-
-
-/* ======================================================
-   STARTUP
-====================================================== */
-
-if ("speechSynthesis" in window) {
-  window.speechSynthesis.getVoices();
-
-  window.speechSynthesis.onvoiceschanged = function() {
-    getEnglishVoice();
-  };
-}
-
-loadChat();
-updateVoiceControls();
-
+init();
 </script>
 
-</body>
-</html>
+
+</body></html>
