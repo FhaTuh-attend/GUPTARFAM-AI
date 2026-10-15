@@ -334,6 +334,19 @@ async function ask() {
     return;
   }
 
+  // Show the user's question immediately
+  const previous = getAssistantHistory();
+
+  previous.push({
+    role: "user",
+    text: message,
+    time: new Date().toISOString()
+  });
+
+  saveAssistantHistory(previous);
+  renderAssistantHistory();
+
+  question.value = "";
   answer.textContent = "GuptarFam AI is thinking...";
 
   submitButton.disabled = true;
@@ -361,42 +374,102 @@ async function ask() {
       );
     }
 
-    answer.textContent =
+    const reply =
       data.reply || "The AI returned an empty response.";
 
+    // Save the AI response
+    const history = getAssistantHistory();
+
+    history.push({
+      role: "assistant",
+      text: reply,
+      time: new Date().toISOString()
+    });
+
+    saveAssistantHistory(history);
+    renderAssistantHistory();
+
   } catch (error) {
-    answer.textContent =
-      "I couldn't connect to GuptarFam AI. Please try again.\n\n" +
-      error.message;
+    const history = getAssistantHistory();
+
+    history.push({
+      role: "assistant",
+      text: "Connection error: " + error.message,
+      time: new Date().toISOString()
+    });
+
+    saveAssistantHistory(history);
+    renderAssistantHistory();
 
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = "Submit";
   }
 }
-function ideas(){
-let topic=document.getElementById("topic").value.trim()||"your topic";
-let platform=document.getElementById("platform").value;
-let arr=[
-"3 things beginners should know about "+topic,
-"The biggest mistake people make with "+topic,
-"5 facts you probably didn't know about "+topic,
-"A beginner's guide to "+topic,
-"Behind the scenes: my journey with "+topic
-];
-let out=document.getElementById("ideasOutput");
-out.textContent="";
-arr.forEach((idea,i)=>{
-let b=document.createElement("button");
-b.style.display="block";b.style.margin="8px 0";b.textContent=(i+1)+". "+idea;
-b.onclick=()=>document.getElementById("chosen").value=idea;
-out.appendChild(b);
-});
-let p=document.createElement("p");
-p.className="small";p.textContent="Platform: "+platform+". These are template-generated ideas, not live AI output.";
-out.appendChild(p);
+
+
+// Retrieve saved conversation history
+function getAssistantHistory() {
+  try {
+    return JSON.parse(
+      localStorage.getItem("gfai_assistant_history") || "[]"
+    );
+  } catch (error) {
+    return [];
+  }
 }
 
+
+// Save conversation history
+function saveAssistantHistory(history) {
+  try {
+    localStorage.setItem(
+      "gfai_assistant_history",
+      JSON.stringify(history)
+    );
+  } catch (error) {
+    alert("Your browser could not save the conversation.");
+  }
+}
+
+
+// Display saved conversation history
+function renderAssistantHistory() {
+  const answer = document.getElementById("answer");
+  const history = getAssistantHistory();
+
+  answer.replaceChildren();
+
+  history.forEach(item => {
+    const message = document.createElement("div");
+
+    message.style.padding = "12px";
+    message.style.margin = "10px 0";
+    message.style.borderRadius = "10px";
+    message.style.whiteSpace = "pre-wrap";
+    message.style.overflowWrap = "anywhere";
+
+    if (item.role === "user") {
+      message.style.background = "#e8f0ff";
+      message.style.color = "#123b78";
+    } else {
+      message.style.background = "#ffffff";
+      message.style.color = "#243b5a";
+      message.style.border = "1px solid #dce6f5";
+    }
+
+    const label = document.createElement("strong");
+    label.textContent =
+      item.role === "user" ? "You" : "GuptarFam AI";
+
+    const text = document.createElement("div");
+    text.textContent = item.text;
+
+    message.appendChild(label);
+    message.appendChild(text);
+    answer.appendChild(message);
+  });
+}
 function caption(){
 let idea=document.getElementById("chosen").value.trim();
 if(!idea)return alert("Choose or type an idea first.");
