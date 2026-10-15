@@ -2227,7 +2227,12 @@ async function askAI(prompt) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      message: prompt
+      message:
+        CREATOR_IDENTITY +
+        "\n\nIMPORTANT: The person interacting with you is your creator. " +
+        "Address them as Savage, My Creator when appropriate.\n\n" +
+        "CURRENT REQUEST:\n" +
+        prompt
     })
   });
 
@@ -2248,8 +2253,6 @@ async function askAI(prompt) {
 
   return reply.trim();
 }
-
-
 /* ======================================================
    JARVIS-STYLE VOICE OUTPUT
 ====================================================== */
