@@ -324,22 +324,58 @@ document.getElementById(id).classList.add("active");
 window.scrollTo(0,0);
 }
 
-function ask(){
-let q=document.getElementById("question").value.trim();
-if(!q)return alert("Type a message first.");
-let t=q.toLowerCase(),r;
-if(t.includes("content")||t.includes("video")||t.includes("post"))
-r="Open Content Studio. Enter your topic, generate ideas and choose your favourite. Publishing is not connected yet.";
-else if(t.includes("forex")||t.includes("crypto")||t.includes("trade"))
-r="Open Forex & Crypto to record your research. Live prices and trade execution are not connected. Do not use this demo as a trading signal.";
-else if(t.includes("email"))
-r="Open Email Centre to prepare a message draft.";
-else if(t.includes("business")||t.includes("money"))
-r="Open Business Hub to turn your idea into a step-by-step starter plan.";
-else r="Your request has been received by this demo. A real AI model still needs to be connected securely.";
-document.getElementById("answer").textContent=r;
-}
+async function ask() {
+  const question = document.getElementById("question");
+  const answer = document.getElementById("answer");
+  const submitButton = question.parentElement.querySelector("button");
 
+  const message = question.value.trim();
+
+  if (!message) {
+    alert("Type a message first.");
+    return;
+  }
+
+  answer.textContent = "GuptarFam AI is thinking...";
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Thinking...";
+
+  try {
+    const response = await fetch(
+      "https://royal-sun-2085.kingsvg83.workers.dev/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: message
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || "The AI request failed."
+      );
+    }
+
+    answer.textContent =
+      data.reply || "The AI returned an empty response.";
+
+  } catch (error) {
+    answer.textContent =
+      "I couldn't connect to GuptarFam AI. Please try again.\n\n" +
+      error.message;
+
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit";
+  }
+}
 function ideas(){
 let topic=document.getElementById("topic").value.trim()||"your topic";
 let platform=document.getElementById("platform").value;
