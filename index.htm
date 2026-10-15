@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GuptarFam AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101116;color:#f5f5f7;font-family:Arial,sans-serif}
+header{padding:22px;background:#191b24;border-bottom:2px solid #f5b82e}
+header h1{margin:0;color:#f5b82e}
+header p{color:#aaa}
+nav{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:#191b24}
+button{padding:11px;border:0;border-radius:8px;background:#f5b82e;color:#111;font-weight:bold;cursor:pointer}
+nav button{background:#292b36;color:white}
+main{padding:16px;max-width:900px;margin:auto}
+section{display:none}
+section.active{display:block}
+.card{background:#191b24;border:1px solid #333644;border-radius:12px;padding:17px;margin:12px 0}
+h2{color:#f5b82e}
+input,textarea,select{display:block;width:100%;padding:12px;margin:9px 0 15px;background:#101116;color:white;border:1px solid #444;border-radius:8px}
+textarea{min-height:100px}
+.output{white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere;margin-top:12px}
+.small{font-size:12px;color:#aaa;line-height:1.6}
+</style>
+</head>
+<body>
+<header>
+<h1>🔥 GUPTARFAM AI</h1>
+<p>Your personal AI command centre</p>
+</header>
+
+<nav>
+<button onclick="page('home')">Home</button>
+<button onclick="page('assistant')">AI Assistant</button>
+<button onclick="page('content')">Content Studio</button>
+<button onclick="page('markets')">Forex & Crypto</button>
+<button onclick="page('email')">Email Centre</button>
+<button onclick="page('business')">Business Hub</button>
+<button onclick="page('automation')">Automation</button>
+</nav>
+
+<main>
+<section id="home" class="active">
+<div class="card">
+<h2>Welcome to GuptarFam AI 🚀</h2>
+<p>One place for content creation, market research, emails and business planning.</p>
+<p>Starting budget: R0</p>
+<button onclick="page('content')">Create Content</button>
+<button onclick="page('assistant')">Open Assistant</button>
+</div>
+<div class="card">
+<h2>Your AI modules</h2>
+<p>🎬 YouTube, TikTok, Instagram and Facebook content</p>
+<p>📈 Forex and cryptocurrency research</p>
+<p>✉️ Email drafting and replies</p>
+<p>💼 Business planning and marketing</p>
+<p>⚙️ Future automation and publishing</p>
+</div>
+</section>
+
+<section id="assistant">
+<div class="card">
+<h2>AI Assistant 🤖</h2>
+<p class="small">This is a demo assistant. A real AI connection will be added later.</p>
+<textarea id="question" placeholder="What do you want GuptarFam AI to help with?"></textarea>
+<button onclick="ask()">Submit</button>
+<div id="answer" class="output"></div>
+</div>
+</section>
+
+<section id="content">
+<div class="card">
+<h2>Content Studio 🎬</h2>
+<label>Platform</label>
+<select id="platform">
+<option>YouTube</option><option>TikTok</option>
+<option>Instagram</option><option>Facebook</option>
+</select>
+<label>Content topic</label>
+<input id="topic" placeholder="e.g. Amapiano, lifestyle, forex education">
+<label>Content format</label>
+<select id="format">
+<option>Short video</option><option>Long video</option>
+<option>Social media post</option><option>Educational content</option>
+</select>
+<button onclick="ideas()">Generate Ideas</button>
+<div id="ideasOutput" class="output"></div>
+<label>Your favourite idea</label>
+<textarea id="chosen" placeholder="Select an idea from the results and put it here"></textarea>
+<button onclick="caption()">Create Caption</button>
+<div id="captionOutput" class="output"></div>
+<button onclick="saveContent()">Save Idea</button>
+<button onclick="copyCaption()">Copy Caption</button>
+<h3>Saved ideas</h3>
+<div id="savedOutput" class="output"></div>
+</div>
+</section>
+
+<section id="markets">
+<div class="card">
+<h2>Forex & Crypto 📈</h2>
+<p class="small">Research workspace only. Live prices and trading are not connected.</p>
+<label>Choose a market</label>
+<select id="symbol">
+<option>XAUUSD — Gold</option><option>EURUSD</option>
+<option>GBPUSD</option><option>USDZAR</option>
+<option>USDCAD</option><option>US30</option>
+<option>NASDAQ</option><option>BTCUSD — Bitcoin</option>
+<option>ETHUSD — Ethereum</option>
+</select>
+<label>Research notes</label>
+<textarea id="marketNotes" placeholder="Record your trend, support, resistance and news observations"></textarea>
+<button onclick="saveNotes()">Save Notes</button>
+<div id="notesOutput" class="output"></div>
+</div>
+</section>
+
+<section id="email">
+<div class="card">
+<h2>Email Centre ✉️</h2>
+<p class="small">Creates a draft. It does not access your inbox or send emails.</p>
+<label>Type of email</label>
+<select id="emailType">
+<option>Professional reply</option><option>Job application</option>
+<option>Follow-up</option><option>Request for information</option>
+<option>Apology</option><option>Business proposal</option>
+</select>
+<label>Explain what the email should say</label>
+<textarea id="emailInfo" placeholder="Enter the details here"></textarea>
+<button onclick="emailDraft()">Prepare Email</button>
+<div id="emailResult" class="output"></div>
+<button onclick="copyText('emailResult')">Copy Email</button>
+</div>
+</section>
+
+<section id="business">
+<div class="card">
+<h2>Business Hub 💼</h2>
+<label>Your business idea or goal</label>
+<textarea id="businessIdea" placeholder="What do you want to achieve?"></textarea>
+<label>Your available budget in rand</label>
+<input id="budget" type="number" min="0" value="0">
+<button onclick="businessPlan()">Create Plan</button>
+<div id="businessResult" class="output"></div>
+<button onclick="copyText('businessResult')">Copy Plan</button>
+</div>
+</section>
+
+<section id="automation">
+<div class="card">
+<h2>Automation Centre ⚙️</h2>
+<p>Track what we need to build next.</p>
+<label><input type="checkbox"> Publish dashboard with GitHub Pages</label>
+<label><input type="checkbox"> Connect a real AI model securely</label>
+<label><input type="checkbox"> Connect live forex and crypto data</label>
+<label><input type="checkbox"> Connect email with permission</label>
+<label><input type="checkbox"> Set up approved social publishing</label>
+<label><input type="checkbox"> Add scheduled automation</label>
+<p class="small">These checkboxes are a checklist only. They do not run external services.</p>
+</div>
+</section>
+
+<div class="card small">
+GuptarFam AI · © 2026 Fhatuwani Muungulwa<br>
+Dashboard prototype. Never put passwords, API keys or broker credentials in this public file.
+</div>
+</main>
+
+<script>
+function page(id){
+document.querySelectorAll("main section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+window.scrollTo(0,0);
+}
+
+function ask(){
+let q=document.getElementById("question").value.trim();
+if(!q)return alert("Type a message first.");
+let t=q.toLowerCase(),r;
+if(t.includes("content")||t.includes("video")||t.includes("post"))
+r="Open Content Studio. Enter your topic, generate ideas and choose your favourite. Publishing is not connected yet.";
+else if(t.includes("forex")||t.includes("crypto")||t.includes("trade"))
+r="Open Forex & Crypto to record your research. Live prices and trade execution are not connected. Do not use this demo as a trading signal.";
+else if(t.includes("email"))
+r="Open Email Centre to prepare a message draft.";
+else if(t.includes("business")||t.includes("money"))
+r="Open Business Hub to turn your idea into a step-by-step starter plan.";
+else r="Your request has been received by this demo. A real AI model still needs to be connected securely.";
+document.getElementById("answer").textContent=r;
+}
+
+function ideas(){
+let topic=document.getElementById("topic").value.trim()||"your topic";
+let platform=document.getElementById("platform").value;
+let arr=[
+"3 things beginners should know about "+topic,
+"The biggest mistake people make with "+topic,
+"5 facts you probably didn't know about "+topic,
+"A beginner's guide to "+topic,
+"Behind the scenes: my journey with "+topic
+];
+let out=document.getElementById("ideasOutput");
+out.textContent="";
+arr.forEach((idea,i)=>{
+let b=document.createElement("button");
+b.style.display="block";b.style.margin="8px 0";b.textContent=(i+1)+". "+idea;
+b.onclick=()=>document.getElementById("chosen").value=idea;
+out.appendChild(b);
+});
+let p=document.createElement("p");
+p.className="small";p.textContent="Platform: "+platform+". These are template-generated ideas, not live AI output.";
+out.appendChild(p);
+}
+
+function caption(){
+let idea=document.getElementById("chosen").value.trim();
+if(!idea)return alert("Choose or type an idea first.");
+document.getElementById("captionOutput").textContent=
+idea+"\n\nLet's talk about this! 🔥\n\nWhat do you think? Share your thoughts below.\n\n#GuptarFam #ContentCreator";
+}
+
+function getSaved(){try{return JSON.parse(localStorage.getItem("gfai_ideas")||"[]")}catch(e){return[]}}
+function saveContent(){
+let idea=document.getElementById("chosen").value.trim();
+if(!idea)return alert("Choose an idea first.");
+let arr=getSaved();
+arr.unshift({idea:idea,platform:document.getElementById("platform").value});
+localStorage.setItem("gfai_ideas",JSON.stringify(arr));
+renderSaved();
+alert("Idea saved on this device.");
+}
+function renderSaved(){
+let out=document.getElementById("savedOutput");
+out.textContent="";
+getSaved().forEach(x=>{
+let p=document.createElement("p");
+p.textContent=x.platform+": "+x.idea;
+out.appendChild(p);
+});
+}
+function copyValue(t){
+if(navigator.clipboard&&window.isSecureContext){
+navigator.clipboard.writeText(t).then(()=>alert("Copied!")).catch(()=>prompt("Copy this text:",t));
+}else prompt("Copy this text:",t);
+}
+function copyCaption(){
+let t=document.getElementById("captionOutput").textContent;
+if(t)copyValue(t);else alert("Create a caption first.");
+}
+function copyText(id){
+let t=document.getElementById(id).textContent;
+if(t)copyValue(t);else alert("Create the text first.");
+}
+function saveNotes(){
+localStorage.setItem("gfai_notes",document.getElementById("marketNotes").value);
+document.getElementById("notesOutput").textContent="Research notes saved on this device.";
+}
+function emailDraft(){
+let info=document.getElementById("emailInfo").value.trim();
+if(!info)return alert("Enter the email details first.");
+let type=document.getElementById("emailType").value;
+document.getElementById("emailResult").textContent=
+"Subject: "+type+"\n\nDear [Name],\n\nI am writing regarding the following:\n\n"+info+"\n\nThank you for your time. I look forward to hearing from you.\n\nKind regards,\n[Your Name]";
+}
+function businessPlan(){
+let idea=document.getElementById("businessIdea").value.trim();
+let budget=Number(document.getElementById("budget").value);
+if(!idea)return alert("Enter your business idea first.");
+if(!Number.isFinite(budget)||budget<0)return alert("Enter a valid budget.");
+document.getElementById("businessResult").textContent=
+"BUSINESS STARTER PLAN\n\nGoal: "+idea+"\nBudget: R"+budget+"\n\n1. Identify your target customer.\n2. Find the problem your idea solves.\n3. Test the idea before spending money.\n4. Start with free tools where possible.\n5. Promote your offer and ask for feedback.\n6. Review results every week.\n\nNEXT STEP: Choose one action you can complete today.";
+}
+function escapeHTML(s){
+return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+renderSaved();
+</script>
+</body>
+</html>
