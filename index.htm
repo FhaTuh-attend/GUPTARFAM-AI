@@ -2049,9 +2049,31 @@ function navigate(page) {
 }
 
 document.querySelectorAll(".nav-button").forEach(function(button) {
-  button.addEventListener("click", function() {
-    navigate(button.dataset.page);
-  });
+  button.onclick = function() {
+    const page = button.getAttribute("data-page");
+    const target = document.getElementById("page-" + page);
+
+    if (!target) {
+      alert("Page not found: page-" + page);
+      return;
+    }
+
+    document.querySelectorAll(".page").forEach(function(section) {
+      section.classList.remove("active");
+    });
+
+    target.classList.add("active");
+
+    document.querySelectorAll(".nav-button").forEach(function(item) {
+      item.classList.toggle("active", item === button);
+    });
+
+    const title = document.getElementById("topbarTitle");
+    if (title) title.textContent = pageTitles[page] || "GuptarFam AI";
+
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar) sidebar.classList.remove("open");
+  };
 });
 
 document.getElementById("mobileMenu").addEventListener("click", function() {
