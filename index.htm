@@ -277,5 +277,194 @@ return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;",
 }
 renderSaved();
 </script>
+  <!-- GUPTARFAM AI - REAL AI CHAT -->
+<style>
+  #gf-chat-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 99999;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 22px;
+    background: #1769ff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px #0003;
+  }
+
+  #gf-chat-panel {
+    display: none;
+    position: fixed;
+    right: 20px;
+    bottom: 85px;
+    width: min(360px, calc(100vw - 40px));
+    height: 460px;
+    max-height: calc(100vh - 120px);
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 99999;
+    box-shadow: 0 8px 30px #0003;
+    font-family: Arial, sans-serif;
+  }
+
+  #gf-chat-header {
+    background: #1769ff;
+    color: white;
+    padding: 16px;
+    font-weight: bold;
+  }
+
+  #gf-chat-messages {
+    height: calc(100% - 135px);
+    padding: 12px;
+    overflow-y: auto;
+    color: #222;
+    font-size: 14px;
+  }
+
+  .gf-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .gf-user {
+    background: #e8f0ff;
+  }
+
+  .gf-ai {
+    background: #f1f3f5;
+  }
+
+  #gf-chat-form {
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+    border-top: 1px solid #ddd;
+  }
+
+  #gf-chat-input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: #222;
+  }
+
+  #gf-chat-form button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    background: #1769ff;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+
+<button id="gf-chat-button" type="button">
+  💬 Chat with GuptarFam AI
+</button>
+
+<div id="gf-chat-panel">
+  <div id="gf-chat-header">GuptarFam AI 💙</div>
+
+  <div id="gf-chat-messages">
+    <div class="gf-message gf-ai">
+      Hey! I'm GuptarFam AI. What can I help you with today?
+    </div>
+  </div>
+
+  <form id="gf-chat-form">
+    <input
+      id="gf-chat-input"
+      type="text"
+      placeholder="Ask me anything..."
+      autocomplete="off"
+      required
+    >
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<script>
+(() => {
+  const API_URL =
+    "https://royal-sun-2085.kingsvg83.workers.dev/chat";
+
+  const button = document.getElementById("gf-chat-button");
+  const panel = document.getElementById("gf-chat-panel");
+  const form = document.getElementById("gf-chat-form");
+  const input = document.getElementById("gf-chat-input");
+  const messages = document.getElementById("gf-chat-messages");
+
+  button.addEventListener("click", () => {
+    panel.style.display =
+      panel.style.display === "block" ? "none" : "block";
+
+    if (panel.style.display === "block") {
+      input.focus();
+    }
+  });
+
+  function addMessage(text, type) {
+    const message = document.createElement("div");
+    message.className = "gf-message " + type;
+    message.textContent = text;
+    messages.appendChild(message);
+    messages.scrollTop = messages.scrollHeight;
+    return message;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const message = input.value.trim();
+    if (!message) return;
+
+    addMessage(message, "gf-user");
+    input.value = "";
+    input.disabled = true;
+
+    const sendButton = form.querySelector("button");
+    sendButton.disabled = true;
+
+    const waiting = addMessage("Thinking...", "gf-ai");
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Request failed.");
+      }
+
+      waiting.textContent =
+        data.reply || "The AI returned no reply.";
+    } catch (error) {
+      waiting.textContent =
+        "I couldn't connect to my AI brain. Please try again. " +
+        "(" + error.message + ")";
+    } finally {
+      input.disabled = false;
+      sendButton.disabled = false;
+      input.focus();
+    }
+  });
+})();
+</script>
 </body>
 </html>
