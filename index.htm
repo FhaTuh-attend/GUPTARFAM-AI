@@ -349,18 +349,31 @@ renderSaved();
     border-top: 1px solid #ddd;
   }
 
- #gf-chat-input {
-flex: 1;
-min-width: 0;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 8px;
-color: #111111 !important;
+#gf-chat-panel #gf-chat-input,
+#gf-chat-panel input#gf-chat-input,
+#gf-chat-form input {
+background: #ffffff !important;
 background-color: #ffffff !important;
-caret-color: #1769ff;
-outline-color: #1769ff;
-opacity: 1;
+color: #000000 !important;
+-webkit-text-fill-color: #000000 !important;
+border: 2px solid #1769ff !important;
+opacity: 1 !important;
+box-shadow: none !important;
 }
+
+#gf-chat-panel #gf-chat-input::placeholder {
+color: #666666 !important;
+-webkit-text-fill-color: #666666 !important;
+opacity: 1 !important;
+}
+
+#gf-chat-panel #gf-chat-input:focus {
+background: #ffffff !important;
+color: #000000 !important;
+-webkit-text-fill-color: #000000 !important;
+outline: 2px solid #1769ff !important;
+}
+
 
 #gf-chat-input::placeholder {
 color: #777777 !important;
@@ -383,7 +396,7 @@ opacity: 1;
 </button>
 
 <div id="gf-chat-panel">
-  <div id="gf-chat-header">GuptarFam AI 💙</div>
+  <div id="gf-chat-header">GuptarFam AI </div>
 
   <div id="gf-chat-messages">
     <div class="gf-message gf-ai">
