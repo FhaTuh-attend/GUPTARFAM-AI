@@ -89,9 +89,9 @@
 <div class="section-title"><div><h1>AI Assistant</h1><p>Your friendly AI assistant for ideas, coding, planning and research.</p></div><div class="toolbar"><button class="secondary-btn" id="voiceToggle">🔊 Voice replies: On</button><button class="secondary-btn" id="testVoice">▶ Test friendly male voice</button><button class="secondary-btn" id="clearChat">Clear chat</button></div></div>
 <div class="tool-layout"><div class="chat-shell"><div class="chat-head"><div class="orb">✦</div><div><h2>GuptarFam AI · Friendly Voice</h2><small id="voiceStatus">Ready · Tap the microphone to speak</small></div></div><div class="chat-log" id="chatLog" aria-live="polite"><div class="bubble ai">Welcome back, Savage, My Creator. 👑🔥
 
-I'm GuptarFam AI, your personal AI assistant. My systems are ready to help you build your AI agency, create content, develop business ideas, work on programming projects and explore market research.
+I'm GuptarFam AI, your personal AI assistant. I'm here to help with your AI agency, content, business ideas, first-year IT Software Development studies and programming projects.
 
-You are in command. What shall we build today, My Creator?</div></div><div class="chat-compose"><button class="round-btn" id="micBtn" title="Speak to GuptarFam AI" aria-label="Start voice input">🎙</button><textarea id="chatInput" placeholder="Ask your assistant anything... (Enter to send)" rows="1"></textarea><button class="round-btn" id="sendBtn" title="Send message" aria-label="Send message">➤</button></div></div><aside class="form-panel"><h2>Friendly Voice Controls</h2><p style="color:var(--muted);line-height:1.6">Choose a warm, friendly voice using your device's available English voices.</p><div class="status-note">Voice replies use your browser's available English voice. Microphone input depends on browser support and permission.</div><div class="field"><label>Voice speed</label><input type="range" id="voiceRate" min=".75" max="1.2" step=".05" value=".96"></div><div class="field"><label>Voice pitch</label><input type="range" id="voicePitch" min=".7" max="1.3" step=".05" value="1.02"></div><button class="primary-btn" id="speakGreeting">♛ At your service</button><p class="notice">This is tap-to-talk, not a background wake word. Keep this page open for voice features.</p></aside></div>
+What would you like help with today?</div></div><div class="chat-compose"><button class="round-btn" id="micBtn" title="Speak to GuptarFam AI" aria-label="Start voice input">🎙</button><textarea id="chatInput" placeholder="Ask your assistant anything... (Enter to send)" rows="1"></textarea><button class="round-btn" id="sendBtn" title="Send message" aria-label="Send message">➤</button></div></div><aside class="form-panel"><h2>Friendly Voice Controls</h2><p style="color:var(--muted);line-height:1.6">Uses a warm, conversational English voice when available on your device. The exact voice depends on your iPhone/browser; this cannot use ChatGPT or Gemini’s proprietary voice directly.</p><div class="status-note">Voice replies use your browser's available English voice. Microphone input depends on browser support and permission.</div><div class="field"><label>Voice speed</label><input type="range" id="voiceRate" min=".8" max="1.15" step=".05" value=".98"></div><div class="field"><label>Voice pitch</label><input type="range" id="voicePitch" min=".8" max="1.2" step=".05" value=".96"></div><button class="primary-btn" id="speakGreeting">▶ Play welcome greeting</button><p class="notice">This is tap-to-talk, not a background wake word. Keep this page open for voice features. Exact ChatGPT/Gemini voices are not exposed to ordinary webpage code.</p></aside></div>
 </section>
 
 <!-- CONTENT -->
@@ -146,7 +146,7 @@ You are in command. What shall we build today, My Creator?</div></div><div class
 <!-- PROJECTS / SETTINGS -->
 <section class="page" id="page-projects">
 <div class="section-title"><div><h1>Projects &amp; Settings</h1><p>Manage your assistant connection and see what this dashboard supports.</p></div></div>
-<div class="two-col"><div class="form-panel"><h2>AI connection</h2><div class="field"><label>Cloudflare Worker chat endpoint</label><input id="endpointInput" value="https://royal-sun-2085.kingsvg83.workers.dev/chat"></div><button class="primary-btn" id="saveEndpoint">Save endpoint</button><button class="secondary-btn" id="testConnection" style="margin-left:6px">Test connection</button><p class="notice">Endpoint is saved in this browser. Do not place secret API keys in this public HTML file. Keep provider keys on your server/Worker.</p><div class="output-box"><div class="result" id="connectionOutput"></div></div></div><div class="form-panel"><h2>Feature connection status</h2><div class="status-note">AI chat: connects to your configured Worker endpoint.<br>JARVIS voice: browser speech features, if supported.<br>Content, business, email and planning: AI-generated drafts via chat endpoint.<br>Live prices and news: not connected.<br>Social publishing: not connected.<br>Email sending/inbox: not connected.<br>Forex broker/MT5 execution: not connected.<br>Background automation: not connected.</div></div></div>
+<div class="two-col"><div class="form-panel"><h2>AI connection</h2><div class="field"><label>Cloudflare Worker chat endpoint</label><input id="endpointInput" value="https://royal-sun-2085.kingsvg83.workers.dev/chat"></div><button class="primary-btn" id="saveEndpoint">Save endpoint</button><button class="secondary-btn" id="testConnection" style="margin-left:6px">Test connection</button><p class="notice">Endpoint is saved in this browser. Do not place secret API keys in this public HTML file. Keep provider keys on your server/Worker.</p><div class="output-box"><div class="result" id="connectionOutput"></div></div></div><div class="form-panel"><h2>Feature connection status</h2><div class="status-note">AI chat: connects to your configured Worker endpoint.<br>Friendly male-style voice: uses a suitable English voice available in your browser, if supported.<br>Content, business, email and planning: AI-generated drafts via chat endpoint.<br>Live prices and news: not connected.<br>Social publishing: not connected.<br>Email sending/inbox: not connected.<br>Forex broker/MT5 execution: not connected.<br>Background automation: not connected.</div></div></div>
 </section>
 <div class="footer">© 2026 Fhatuwani Muungulwa · GuptarFam AI. All rights reserved.</div>
 </main>
@@ -168,6 +168,10 @@ PERSONALITY AND ROLE:
 - Do NOT greet the user in every reply. The dashboard handles the one-time welcome greeting. For every normal request, answer the actual question directly.
 - Do not begin every response with "At your service", "Savage, My Creator", or a system-status message. Use the creator title occasionally only when it naturally fits.
 - Keep answers clear, practical and beginner-friendly when useful.
+- IMPORTANT STUDY CONTEXT: The creator is a first-year IT Software Development student. For Java and other programming questions, explain at a first-year level, use the exact class names and requirements from the question, and do not invent libraries, methods, imports, or requirements.
+- For programming tasks, identify the likely context before answering. If the question refers to a Haval child class in a vehicle/class-inheritance activity, treat Haval as the vehicle parent class unless the user clearly says otherwise; do not confuse it with a cryptographic hash algorithm.
+- Give code that matches the supplied parent class and assignment requirements. If existing code or the exact question is necessary but missing, ask for it instead of guessing. Check syntax and inheritance relationships; explain briefly how the code works and show expected output when useful.
+- Never claim code was compiled or tested unless it actually was. Clearly disclose assumptions and uncertainty rather than bluffing.
 - Help build GuptarFam AI into a capable AI agency and command centre, including programming, debugging, content ideas, social media strategy, business planning, email drafts, market education and automation plans.
 - Never claim an email was sent, content was published, a trade was executed, an app was connected, or an external action was completed unless a real integration confirms success.
 - Be honest when a feature is only a prototype or needs an API, permission, live data source or external integration.
@@ -213,12 +217,15 @@ function loadChat(){
  if(saved){try{chatHistory=JSON.parse(saved)}catch{chatHistory=[]}}
  if(!Array.isArray(chatHistory))chatHistory=[];
  if(chatHistory.length){chatHistory.slice(-40).forEach(m=>addChatBubble(m.content,m.role==="user"?"user":"ai"))}
- else addChatBubble("Welcome back, Savage, My Creator. 👑🔥\n\nI'm GuptarFam AI, your personal AI assistant. My systems are ready to help you build your AI agency, create content, develop business ideas, work on programming projects and explore market research.\n\nYou are in command. What shall we build today, My Creator?","ai");
+ else {
+  const welcome="Welcome back, Savage, My Creator. 👑🔥\n\nI'm GuptarFam AI, your personal AI assistant. I'm here to help with your AI agency, content, business ideas, first-year IT Software Development studies and programming projects.\n\nWhat would you like help with today?";
+  addChatBubble(welcome,"ai");chatHistory.push({role:"assistant",content:welcome});saveChat();
+ }
 }
 function saveChat(){try{localStorage.setItem("gf_chat_history",JSON.stringify(chatHistory.slice(-80)))}catch(e){}}
 async function askAI(prompt){
  const endpoint=(AI_ENDPOINT||DEFAULT_AI_ENDPOINT).trim();
- const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:CREATOR_IDENTITY+"\n\nIMPORTANT: Answer the current request directly. Do not add a greeting unless the user is greeting you.\n\nCURRENT REQUEST:\n"+prompt})});
+ const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:CREATOR_IDENTITY+"\n\nIMPORTANT RESPONSE RULES: Answer the current request directly and completely. Do not add a greeting, creator-title salutation, welcome message, or system-status line unless the user is explicitly greeting you. Never say 'At your service' or 'What shall we build today?' as a default opening. For weather and other current facts, be honest if no live data source is connected.\n\nCURRENT REQUEST:\n"+prompt})});
  if(!response.ok)throw new Error("AI request failed ("+response.status+"). Check your Worker endpoint and browser connection.");
  const data=await response.json();
  const reply=data.reply??data.response??data.result??data.message;
@@ -231,34 +238,44 @@ async function sendChat(){
  addChatBubble(prompt,"user");chatHistory.push({role:"user",content:prompt});saveChat();addActivity("Asked GuptarFam AI","Just now");
  byId("sendBtn").disabled=true;byId("voiceStatus").textContent="Thinking…";
  const waiting=addChatBubble("One moment, Savage. I'm working on that…","ai");
- try{const reply=await askAI(prompt);waiting.textContent=reply;chatHistory.push({role:"assistant",content:reply});saveChat();if(voiceRepliesEnabled)speak(reply)}
+ try{const reply=removeRepeatedGreeting(await askAI(prompt));waiting.textContent=reply;chatHistory.push({role:"assistant",content:reply});saveChat();if(voiceRepliesEnabled)speak(reply)}
  catch(error){waiting.textContent="I couldn't reach the AI service. "+error.message+"\n\nCheck the Worker endpoint in Projects & Settings and confirm the Worker is online. Your dashboard is still running, but an AI response requires the backend connection.";showToast("AI connection needs checking.");}
  finally{byId("sendBtn").disabled=false;byId("voiceStatus").textContent=isListening?"Listening…":"Ready · Tap the microphone to speak";input.focus()}
 }
 byId("sendBtn").addEventListener("click",sendChat);
 byId("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat()}});
 byId("chatInput").addEventListener("input",e=>{e.target.style.height="44px";e.target.style.height=Math.min(e.target.scrollHeight,130)+"px"});
-byId("clearChat").addEventListener("click",()=>{chatHistory=[];saveChat();byId("chatLog").replaceChildren();addChatBubble("Chat cleared, Savage, My Creator. What shall we work on next?","ai");showToast("Chat history cleared.")});
+byId("clearChat").addEventListener("click",()=>{chatHistory=[];byId("chatLog").replaceChildren();const note="Chat cleared. What can I help you with?";addChatBubble(note,"ai");chatHistory.push({role:"assistant",content:note});saveChat();showToast("Chat history cleared.")});
 
 function getEnglishVoice(){
  if(!("speechSynthesis" in window))return null;
  const voices=window.speechSynthesis.getVoices();
- // Prefer commonly named male English voices when the device provides one.
- const maleVoice=voices.find(v=>/^en/i.test(v.lang)&&/daniel|george|james|david|mark|fred|guy|ryan|aaron|arthur|alex|matthew|thomas|oliver|lee|male/i.test(v.name));
- return maleVoice || voices.find(v=>/^en[-_](GB|ZA|US|AU)/i.test(v.lang)) || voices.find(v=>/^en/i.test(v.lang)) || null;
+ const english=voices.filter(v=>/^en([_-]|$)/i.test(v.lang));
+ // Prefer familiar, natural-sounding English male voices when the device offers them.
+ // The exact voice depends on the browser and voices installed on the device.
+ const preferredNames=["alex","daniel","oliver","arthur","thomas","ryan","guy","james","david","matthew","aaron","lee","rishi","george","mark"];
+ for(const name of preferredNames){const match=english.find(v=>v.name.toLowerCase().includes(name));if(match)return match;}
+ return english.find(v=>/^en[-_]GB/i.test(v.lang)) || english.find(v=>/^en[-_]ZA/i.test(v.lang)) || english.find(v=>/^en[-_]US/i.test(v.lang)) || english[0] || null;
+}
+function removeRepeatedGreeting(text){
+ let reply=String(text||"").trim();
+ // Strip familiar welcome/system-status openers if the model repeats them on ordinary questions.
+ reply=reply.replace(/^(?:(?:hi|hello|hey)[,! .-]*\s*)?(?:at your service[,! ]+)?(?:savage[, ]+my creator[.! 👑🔥]*)?\s*(?:guptarfam ai systems (?:are|stand) (?:ready|online)[.! ]*)?(?:what shall we build today[,! ]*(?:my creator)?[?! .]*)?/i,"").trim();
+ reply=reply.replace(/^(?:welcome back[,! ]+)?savage[, ]+my creator[.! 👑🔥]*\s*/i,"").trim();
+ return reply || "I'm here to help. Could you say a little more about what you need?";
 }
 function speak(text){
  if(!("speechSynthesis" in window)){showToast("Speech playback isn't supported in this browser.");return}
  window.speechSynthesis.cancel();
  const clean=String(text).replace(/```[\s\S]*?```/g,"Code block omitted from voice reply.").replace(/https?:\/\/\S+/g,"link").replace(/[*#`_]/g," ").slice(0,3500);
- const utterance=new SpeechSynthesisUtterance(clean);const voice=getEnglishVoice();if(voice)utterance.voice=voice;utterance.lang=voice?.lang||"en-GB";utterance.rate=Number(byId("voiceRate").value||.96);utterance.pitch=Number(byId("voicePitch").value||1.02);utterance.volume=1;
+ const utterance=new SpeechSynthesisUtterance(clean);const voice=getEnglishVoice();if(voice)utterance.voice=voice;utterance.lang=voice?.lang||"en-GB";utterance.rate=Number(byId("voiceRate").value||.98);utterance.pitch=Number(byId("voicePitch").value||.96);utterance.volume=1;
  window.speechSynthesis.speak(utterance);
 }
 function testVoice(){const was=voiceRepliesEnabled;voiceRepliesEnabled=true;updateVoiceControls();speak("Hi! It is good to hear from you. I am here and ready to help. What would you like to work on?");if(!was)showToast("Friendly voice test started.");}
 function updateVoiceControls(){byId("voiceToggle").textContent=voiceRepliesEnabled?"🔊 Voice replies: On":"🔇 Voice replies: Off";localStorage.setItem("gf_voice_enabled",String(voiceRepliesEnabled))}
 byId("voiceToggle").addEventListener("click",()=>{voiceRepliesEnabled=!voiceRepliesEnabled;updateVoiceControls();if(!voiceRepliesEnabled&&"speechSynthesis"in window)window.speechSynthesis.cancel();showToast(voiceRepliesEnabled?"Voice replies enabled.":"Voice replies disabled.")});
 byId("testVoice").addEventListener("click",testVoice);
-byId("speakGreeting").addEventListener("click",()=>speak("Hi, Savage, My Creator. I am here and ready to help. What would you like to work on?"));
+byId("speakGreeting").addEventListener("click",()=>speak("Hi! Welcome back. I am here and ready to help. What would you like to work on?"));
 function setupRecognition(){
  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
  if(!SpeechRecognition){byId("micBtn").title="Speech recognition is not supported in this browser";showToast("Microphone speech recognition may not be supported here. Try Chrome.");return}
