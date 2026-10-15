@@ -349,14 +349,24 @@ renderSaved();
     border-top: 1px solid #ddd;
   }
 
-  #gf-chat-input {
-    flex: 1;
-    min-width: 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    color: #222;
-  }
+ #gf-chat-input {
+flex: 1;
+min-width: 0;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 8px;
+color: #111111 !important;
+background-color: #ffffff !important;
+caret-color: #1769ff;
+outline-color: #1769ff;
+opacity: 1;
+}
+
+#gf-chat-input::placeholder {
+color: #777777 !important;
+opacity: 1;
+}
+
 
   #gf-chat-form button {
     border: none;
