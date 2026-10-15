@@ -485,6 +485,7 @@ let arr=getSaved();
 arr.unshift({idea:idea,platform:document.getElementById("platform").value});
 localStorage.setItem("gfai_ideas",JSON.stringify(arr));
 renderSaved();
+renderAssistantHistory();
 alert("Idea saved on this device.");
 }
 function renderSaved(){
