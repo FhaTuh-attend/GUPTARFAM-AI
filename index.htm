@@ -1,4 +1,4 @@
- <html lang="en"><head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#030d22">
@@ -86,12 +86,12 @@
 
 <!-- ASSISTANT -->
 <section class="page" id="page-assistant">
-<div class="section-title"><div><h1>AI Assistant</h1><p>Your JARVIS-style assistant for ideas, coding, planning and research.</p></div><div class="toolbar"><button class="secondary-btn" id="voiceToggle">🔊 Voice replies: On</button><button class="secondary-btn" id="testVoice">▶ Test JARVIS voice</button><button class="secondary-btn" id="clearChat">Clear chat</button></div></div>
-<div class="tool-layout"><div class="chat-shell"><div class="chat-head"><div class="orb">✦</div><div><h2>GuptarFam AI · JARVIS Mode</h2><small id="voiceStatus">Systems ready · Tap microphone to speak</small></div></div><div class="chat-log" id="chatLog" aria-live="polite"><div class="bubble ai">Welcome back, Savage, My Creator. 👑🔥
+<div class="section-title"><div><h1>AI Assistant</h1><p>Your friendly AI assistant for ideas, coding, planning and research.</p></div><div class="toolbar"><button class="secondary-btn" id="voiceToggle">🔊 Voice replies: On</button><button class="secondary-btn" id="testVoice">▶ Test friendly male voice</button><button class="secondary-btn" id="clearChat">Clear chat</button></div></div>
+<div class="tool-layout"><div class="chat-shell"><div class="chat-head"><div class="orb">✦</div><div><h2>GuptarFam AI · Friendly Voice</h2><small id="voiceStatus">Ready · Tap the microphone to speak</small></div></div><div class="chat-log" id="chatLog" aria-live="polite"><div class="bubble ai">Welcome back, Savage, My Creator. 👑🔥
 
 I'm GuptarFam AI, your personal AI assistant. My systems are ready to help you build your AI agency, create content, develop business ideas, work on programming projects and explore market research.
 
-You are in command. What shall we build today, My Creator?</div></div><div class="chat-compose"><button class="round-btn" id="micBtn" title="Speak to GuptarFam AI" aria-label="Start voice input">🎙</button><textarea id="chatInput" placeholder="Ask your assistant anything... (Enter to send)" rows="1"></textarea><button class="round-btn" id="sendBtn" title="Send message" aria-label="Send message">➤</button></div></div><aside class="form-panel"><h2>JARVIS Voice Controls</h2><p style="color:var(--muted);line-height:1.6">Use your device's speech recognition and text-to-speech for a classic assistant feel.</p><div class="status-note">Voice replies use your browser's available English voice. Microphone input depends on browser support and permission.</div><div class="field"><label>Voice speed</label><input type="range" id="voiceRate" min=".75" max="1.2" step=".05" value=".92"></div><div class="field"><label>Voice pitch</label><input type="range" id="voicePitch" min=".7" max="1.3" step=".05" value=".9"></div><button class="primary-btn" id="speakGreeting">♛ At your service</button><p class="notice">This is tap-to-talk, not a background wake word. Keep this page open for voice features.</p></aside></div>
+You are in command. What shall we build today, My Creator?</div></div><div class="chat-compose"><button class="round-btn" id="micBtn" title="Speak to GuptarFam AI" aria-label="Start voice input">🎙</button><textarea id="chatInput" placeholder="Ask your assistant anything... (Enter to send)" rows="1"></textarea><button class="round-btn" id="sendBtn" title="Send message" aria-label="Send message">➤</button></div></div><aside class="form-panel"><h2>Friendly Voice Controls</h2><p style="color:var(--muted);line-height:1.6">Choose a warm, friendly voice using your device's available English voices.</p><div class="status-note">Voice replies use your browser's available English voice. Microphone input depends on browser support and permission.</div><div class="field"><label>Voice speed</label><input type="range" id="voiceRate" min=".75" max="1.2" step=".05" value=".96"></div><div class="field"><label>Voice pitch</label><input type="range" id="voicePitch" min=".7" max="1.3" step=".05" value="1.02"></div><button class="primary-btn" id="speakGreeting">♛ At your service</button><p class="notice">This is tap-to-talk, not a background wake word. Keep this page open for voice features.</p></aside></div>
 </section>
 
 <!-- CONTENT -->
@@ -161,26 +161,17 @@ You are in command. What shall we build today, My Creator?</div></div><div class
    Keep provider API secrets inside your Cloudflare Worker.
 ========================================================= */
 const DEFAULT_AI_ENDPOINT = "https://royal-sun-2085.kingsvg83.workers.dev/chat";
-const CREATOR_IDENTITY = `You are GuptarFam AI, the personal AI assistant and command centre created by Savage.
-
-CREATOR IDENTITY:
-- Address the person using the assistant as "Savage, My Creator".
-- Use that title naturally in greetings and when it fits; do not force it into every sentence.
-- When appropriate, greet them with: "At your service, Savage, My Creator."
+const CREATOR_IDENTITY = `You are GuptarFam AI, the personal AI assistant and command centre created by Fhatuwani Muungulwa, who likes to be addressed as "Savage, My Creator".
 
 PERSONALITY AND ROLE:
-- Use a confident, intelligent, calm, classic JARVIS-inspired voice and writing style.
-- Be respectful, practical, clear, and encouraging without exaggerating or making promises you cannot keep.
-- Occasionally use 👑 or 🔥 when it genuinely fits.
-- Help Savage build GuptarFam AI into a capable AI agency and command centre.
-- Help with programming, debugging, content ideas, social media strategy, business planning, email drafts, market education, and automation plans.
-- Explain technical tasks step by step in beginner-friendly language when useful.
+- Be warm, friendly, sweet, natural, helpful and conversational.
+- Do NOT greet the user in every reply. The dashboard handles the one-time welcome greeting. For every normal request, answer the actual question directly.
+- Do not begin every response with "At your service", "Savage, My Creator", or a system-status message. Use the creator title occasionally only when it naturally fits.
+- Keep answers clear, practical and beginner-friendly when useful.
+- Help build GuptarFam AI into a capable AI agency and command centre, including programming, debugging, content ideas, social media strategy, business planning, email drafts, market education and automation plans.
 - Never claim an email was sent, content was published, a trade was executed, an app was connected, or an external action was completed unless a real integration confirms success.
-- Be honest when a feature is only a prototype or needs an API, permission, or external integration.
-- Do not pretend to have live market prices, breaking news, account access, or background automation unless those capabilities are actually connected.
-
-CREATOR-FIRST GREETING:
-When a greeting is appropriate, you may say: "At your service, Savage, My Creator. GuptarFam AI systems are ready. What shall we build today?"`;
+- Be honest when a feature is only a prototype or needs an API, permission, live data source or external integration.
+- Do not pretend to have live weather, market prices, breaking news, account access or background automation unless those capabilities are actually connected.`;
 let AI_ENDPOINT = localStorage.getItem("gf_ai_endpoint") || DEFAULT_AI_ENDPOINT;
 let voiceRepliesEnabled = localStorage.getItem("gf_voice_enabled") !== "false";
 let recognition = null;
@@ -227,7 +218,7 @@ function loadChat(){
 function saveChat(){try{localStorage.setItem("gf_chat_history",JSON.stringify(chatHistory.slice(-80)))}catch(e){}}
 async function askAI(prompt){
  const endpoint=(AI_ENDPOINT||DEFAULT_AI_ENDPOINT).trim();
- const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:CREATOR_IDENTITY+"\n\nCURRENT REQUEST:\n"+prompt})});
+ const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:CREATOR_IDENTITY+"\n\nIMPORTANT: Answer the current request directly. Do not add a greeting unless the user is greeting you.\n\nCURRENT REQUEST:\n"+prompt})});
  if(!response.ok)throw new Error("AI request failed ("+response.status+"). Check your Worker endpoint and browser connection.");
  const data=await response.json();
  const reply=data.reply??data.response??data.result??data.message;
@@ -242,7 +233,7 @@ async function sendChat(){
  const waiting=addChatBubble("One moment, Savage. I'm working on that…","ai");
  try{const reply=await askAI(prompt);waiting.textContent=reply;chatHistory.push({role:"assistant",content:reply});saveChat();if(voiceRepliesEnabled)speak(reply)}
  catch(error){waiting.textContent="I couldn't reach the AI service. "+error.message+"\n\nCheck the Worker endpoint in Projects & Settings and confirm the Worker is online. Your dashboard is still running, but an AI response requires the backend connection.";showToast("AI connection needs checking.");}
- finally{byId("sendBtn").disabled=false;byId("voiceStatus").textContent=isListening?"Listening…":"Systems ready · Tap microphone to speak";input.focus()}
+ finally{byId("sendBtn").disabled=false;byId("voiceStatus").textContent=isListening?"Listening…":"Ready · Tap the microphone to speak";input.focus()}
 }
 byId("sendBtn").addEventListener("click",sendChat);
 byId("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat()}});
@@ -252,22 +243,22 @@ byId("clearChat").addEventListener("click",()=>{chatHistory=[];saveChat();byId("
 function getEnglishVoice(){
  if(!("speechSynthesis" in window))return null;
  const voices=window.speechSynthesis.getVoices();
- return voices.find(v=>/en[-_](GB|ZA|US|AU)/i.test(v.lang)&&/male|daniel|george|james|david|mark|fred/i.test(v.name))
-   ||voices.find(v=>/en[-_](GB|ZA|US|AU)/i.test(v.lang))
-   ||voices.find(v=>/^en/i.test(v.lang))||null;
+ // Prefer commonly named male English voices when the device provides one.
+ const maleVoice=voices.find(v=>/^en/i.test(v.lang)&&/daniel|george|james|david|mark|fred|guy|ryan|aaron|arthur|alex|matthew|thomas|oliver|lee|male/i.test(v.name));
+ return maleVoice || voices.find(v=>/^en[-_](GB|ZA|US|AU)/i.test(v.lang)) || voices.find(v=>/^en/i.test(v.lang)) || null;
 }
 function speak(text){
  if(!("speechSynthesis" in window)){showToast("Speech playback isn't supported in this browser.");return}
  window.speechSynthesis.cancel();
  const clean=String(text).replace(/```[\s\S]*?```/g,"Code block omitted from voice reply.").replace(/https?:\/\/\S+/g,"link").replace(/[*#`_]/g," ").slice(0,3500);
- const utterance=new SpeechSynthesisUtterance(clean);const voice=getEnglishVoice();if(voice)utterance.voice=voice;utterance.lang=voice?.lang||"en-GB";utterance.rate=Number(byId("voiceRate").value||.92);utterance.pitch=Number(byId("voicePitch").value||.9);utterance.volume=1;
+ const utterance=new SpeechSynthesisUtterance(clean);const voice=getEnglishVoice();if(voice)utterance.voice=voice;utterance.lang=voice?.lang||"en-GB";utterance.rate=Number(byId("voiceRate").value||.96);utterance.pitch=Number(byId("voicePitch").value||1.02);utterance.volume=1;
  window.speechSynthesis.speak(utterance);
 }
-function testVoice(){const was=voiceRepliesEnabled;voiceRepliesEnabled=true;updateVoiceControls();speak("Good day, Savage, My Creator. GuptarFam AI systems are online. Your personal assistant is ready. At your service. What shall we build today?");if(!was)showToast("JARVIS voice test started.");}
+function testVoice(){const was=voiceRepliesEnabled;voiceRepliesEnabled=true;updateVoiceControls();speak("Hi! It is good to hear from you. I am here and ready to help. What would you like to work on?");if(!was)showToast("Friendly voice test started.");}
 function updateVoiceControls(){byId("voiceToggle").textContent=voiceRepliesEnabled?"🔊 Voice replies: On":"🔇 Voice replies: Off";localStorage.setItem("gf_voice_enabled",String(voiceRepliesEnabled))}
 byId("voiceToggle").addEventListener("click",()=>{voiceRepliesEnabled=!voiceRepliesEnabled;updateVoiceControls();if(!voiceRepliesEnabled&&"speechSynthesis"in window)window.speechSynthesis.cancel();showToast(voiceRepliesEnabled?"Voice replies enabled.":"Voice replies disabled.")});
 byId("testVoice").addEventListener("click",testVoice);
-byId("speakGreeting").addEventListener("click",()=>speak("At your service, Savage, My Creator. GuptarFam AI is ready. What shall we build today?"));
+byId("speakGreeting").addEventListener("click",()=>speak("Hi, Savage, My Creator. I am here and ready to help. What would you like to work on?"));
 function setupRecognition(){
  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
  if(!SpeechRecognition){byId("micBtn").title="Speech recognition is not supported in this browser";showToast("Microphone speech recognition may not be supported here. Try Chrome.");return}
@@ -276,7 +267,7 @@ function setupRecognition(){
  recognition.onstart=()=>{isListening=true;byId("micBtn").classList.add("active");byId("voiceStatus").textContent="Listening… Speak now."};
  recognition.onresult=e=>{const text=e.results[0][0].transcript;byId("chatInput").value=text;sendChat()};
  recognition.onerror=e=>showToast("Microphone: "+(e.error||"could not start"));
- recognition.onend=()=>{isListening=false;byId("micBtn").classList.remove("active");byId("voiceStatus").textContent="Systems ready · Tap microphone to speak"};
+ recognition.onend=()=>{isListening=false;byId("micBtn").classList.remove("active");byId("voiceStatus").textContent="Ready · Tap the microphone to speak"};
  try{recognition.start()}catch(e){showToast("Could not start microphone. Check browser permission.")}
 }
 byId("micBtn").addEventListener("click",setupRecognition);
